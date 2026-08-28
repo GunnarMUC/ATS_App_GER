@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local/schemas/job-analysis.schema.json",
+  "title": "JobAnalysis",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "title",
+    "language",
+    "form_of_address",
+    "must_keywords",
+    "nice_keywords",
+    "requirements_compact"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "title": { "type": "string" },
+    "company": { "type": ["string", "null"] },
+    "language": { "type": "string", "enum": ["de", "en"] },
+    "form_of_address": { "type": "string", "enum": ["sie", "du", "unknown"] },
+    "formality": {
+      "type": "string",
+      "enum": ["formal", "neutral", "startup", "unknown"]
+    },
+    "must_keywords": { "type": "array", "items": { "type": "string" } },
+    "nice_keywords": { "type": "array", "items": { "type": "string" } },
+    "requirements_compact": { "type": "string", "maxLength": 4000 },
+    "seniority_hint": { "type": "string" },
+    "injection_risk": { "type": "boolean", "default": false }
+  }
+}

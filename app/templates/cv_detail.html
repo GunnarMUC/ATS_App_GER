@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ cv.original_filename }} · Master-CV{% endblock %}
+{% block content %}
+<header class="page-head">
+  <h1>{{ cv.original_filename }}</h1>
+  <p class="meta">{{ cv.media_type }} · {{ cv.raw_text|length }} Zeichen · {{ cv.created_at }}</p>
+</header>
+
+<section class="card">
+  <h2>Nächste Schritte</h2>
+  <div class="btn-row">
+    <a class="btn primary" href="/cv/{{ cv.id }}/facts">Fakten prüfen / sperren</a>
+    <a class="btn" href="/cv/{{ cv.id }}/export">ATS-Report &amp; Export</a>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Extrahierter Text</h2>
+  <pre class="preview">{{ cv.raw_text }}</pre>
+</section>
+
+<p><a href="/cv" class="btn">Zurück</a></p>
+{% endblock %}

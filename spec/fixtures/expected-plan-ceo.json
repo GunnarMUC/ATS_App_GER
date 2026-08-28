@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "role_family": "ceo",
+  "experience_order": ["exp_gl_ops", "exp_head_log", "exp_pm_wh"],
+  "hidden_experience_ids": [],
+  "skill_order": ["sk_pl", "sk_leadership", "sk_network", "sk_3pl", "sk_projects", "sk_sop"],
+  "emphasis_kpi_ids": ["kpi_revenue", "kpi_fte", "kpi_reports", "kpi_sites"],
+  "emphasis_bullet_ids": ["b_gl_pl", "b_gl_org", "b_hl_team"],
+  "summary_brief": "Unternehmerische Führung: P&L rund 80 Mio. EUR, Organisation mit Direct Reports, Stakeholder-taugliche Operations-Ownership. Warehouse-Projekt nur als frühe Basis, nicht als Fokus.",
+  "keyword_bindings": [
+    { "job_keyword": "P&L", "fact_kind": "kpi", "fact_id": "kpi_revenue", "via_alias": true },
+    { "job_keyword": "Gesamtverantwortung", "fact_kind": "bullet", "fact_id": "b_gl_pl", "via_alias": true },
+    { "job_keyword": "Führung der ersten Linie", "fact_kind": "kpi", "fact_id": "kpi_reports", "via_alias": true },
+    { "job_keyword": "Organisation", "fact_kind": "bullet", "fact_id": "b_gl_org", "via_alias": false }
+  ],
+  "gaps": [
+    {
+      "job_keyword": "Beirat / Gesellschaftergremium",
+      "severity": "nice",
+      "message_de": "Keine explizite Beiratserfahrung in den Fakten. Nicht erfinden."
+    }
+  ],
+  "warnings_de": [
+    "Titel bleibt 'Geschäftsleitung Operations'. Kein Umbennen in CEO."
+  ]
+}

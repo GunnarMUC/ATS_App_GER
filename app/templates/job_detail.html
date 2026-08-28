@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}{{ job.title_raw }}{% endblock %}
+{% block content %}
+<header class="page-head">
+  <h1>{{ job.title_raw }}</h1>
+  <p class="meta">{{ job.language }} · {{ job.source }} · {{ job.created_at }}</p>
+</header>
+
+<section class="card">
+  <h2>Erkannte Rolle</h2>
+  {% set top = detection.top or {} %}
+  <p>
+    <strong>{{ labels.get(effective_role, effective_role) }}</strong>
+    {% if top.confidence %} (Konfidenz {{ top.confidence }}){% endif %}
+  </p>
+  {% if detection.injection_risk %}
+  <div class="banner banner-info">Die Anzeige enthält modellartige Anweisungen. Es werden nur Ihre Fakten genutzt.</div>
+  {% endif %}
+  <p class="meta">Alternativen:</p>
+  <ul class="list">
+    {% for c in detection.candidates or [] %}
+    <li>{{ c.label_de }} · {{ c.confidence }}</li>
+    {% endfor %}
+  </ul>
+  <form method="post" action="/jobs/{{ job.id }}/role" class="form">
+    <label for="role_family">Rolle festlegen</label>
+    <select id="role_family" name="role_family">
+      {% for f in families %}
+      <option value="{{ f }}" {% if f == effective_role %}selected{% endif %}>{{ labels.get(f, f) }}</option>
+      {% endfor %}
+    </select>
+    <button class="btn primary" type="submit" {% if not has_lock %}disabled{% endif %}>
+      Rolle übernehmen und Plan öffnen
+    </button>
+  </form>
+</section>
+
+<section class="card">
+  <h2>Keywords</h2>
+  <p class="meta">Muss: {{ (job.analysis_json.must_keywords or [])|join(', ') }}</p>
+  <p class="meta">Kann: {{ (job.analysis_json.nice_keywords or [])|join(', ') }}</p>
+</section>
+
+<details class="card">
+  <summary>Anzeigentext</summary>
+  <pre class="preview">{{ job.raw_text[:6000] }}</pre>
+</details>
+{% endblock %}

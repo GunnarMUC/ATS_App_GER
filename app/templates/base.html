@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}ATS-Bewerbungs-APP{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/app.css">
+  <script src="/static/vendor/htmx.min.js" defer></script>
+  <script src="/static/vendor/alpine.min.js" defer></script>
+  <script src="/static/js/app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Zum Inhalt</a>
+  <div class="layout">
+    <aside class="nav">
+      <div class="brand">ATS lokal</div>
+      <nav>
+        <a href="/" class="{% if request.url.path == '/' %}active{% endif %}">Übersicht</a>
+        <a href="/cv" class="{% if request.url.path.startswith('/cv') %}active{% endif %}">Master-CV</a>
+        <a href="/jobs/new" class="{% if request.url.path.startswith('/jobs') %}active{% endif %}">Stellen</a>
+        <a href="/profiles" class="{% if request.url.path.startswith('/profiles') %}active{% endif %}">Profile</a>
+        <a href="/settings" class="{% if request.url.path.startswith('/settings') %}active{% endif %}">Einstellungen</a>
+      </nav>
+      <p class="nav-note">Daten bleiben auf diesem Rechner. Die App spricht nur Ollama.</p>
+    </aside>
+    <div class="content">
+      {% if health is defined and health %}
+        {% include "partials/health_banner.html" %}
+      {% endif %}
+      <main id="main">
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+  </div>
+</body>
+</html>

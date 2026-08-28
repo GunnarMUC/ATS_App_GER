@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Fakten · {{ cv.original_filename }}{% endblock %}
+{% block content %}
+<header class="page-head">
+  <h1>Fakten prüfen</h1>
+  <p class="lede">{{ cv.original_filename }} — korrigieren, dann sperren. Ab dem Lock nur noch umsortieren und umformulieren, nicht erweitern.</p>
+</header>
+
+{% if error %}
+<div class="banner banner-error" role="alert">{{ error }}</div>
+{% endif %}
+{% if saved %}
+<div class="banner banner-ok" role="status">Entwurf gespeichert.</div>
+{% endif %}
+{% if locked and lock %}
+<div class="banner banner-ok" role="status">
+  Fakten gesperrt. Hash <code>{{ lock.content_hash[:12] }}…</code>
+  Ab jetzt dürfen Generierungen diese Fakten nur umsortieren und umformulieren, nicht erweitern.
+</div>
+{% endif %}
+{% if active_lock and (not lock or active_lock.id != lock.id) %}
+<div class="banner banner-info" role="status">
+  Es gibt bereits einen aktiven FactLock ({{ active_lock.content_hash[:12] }}…). Ein neuer Lock archiviert den alten.
+</div>
+{% endif %}
+
+<section class="card">
+  <h2>Strukturieren</h2>
+  <p class="meta">Lokales Modell (strong) liest den Rohtext und füllt das JSON. Danach hier korrigieren.</p>
+  <form hx-post="/cv/{{ cv.id }}/structure" hx-target="#facts-panel" hx-swap="innerHTML">
+    <button type="submit" class="btn">Mit Ollama strukturieren</button>
+  </form>
+</section>
+
+<div id="facts-panel">
+{% include "partials/facts_editor.html" %}
+</div>
+
+<p>
+  <a class="btn primary" href="/cv/{{ cv.id }}/export">Export DOCX/PDF/TXT</a>
+  <a class="btn" href="/cv/{{ cv.id }}">Rohtext</a>
+  <a class="btn" href="/cv">Alle CVs</a>
+</p>
+{% endblock %}

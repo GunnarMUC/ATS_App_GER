@@ -1,0 +1,136 @@
+{
+  "schema_version": "1.0",
+  "language": "de",
+  "personal": {
+    "full_name": "Alex Morgenstern",
+    "city": "München",
+    "country": "DE",
+    "email": "alex.morgenstern@example.com",
+    "phone": "+49 170 0000000",
+    "linkedin": "https://www.linkedin.com/in/example-morgenstern",
+    "xing": "",
+    "address_line": "",
+    "birth_date": null,
+    "nationality": null,
+    "marital_status": null
+  },
+  "summary": "",
+  "experience": [
+    {
+      "id": "exp_gl_ops",
+      "employer": "Nordkamm Logistik GmbH",
+      "title": "Geschäftsleitung Operations",
+      "start": "2020-03",
+      "end": "present",
+      "location": "München",
+      "bullets": [
+        {
+          "id": "b_gl_pl",
+          "text": "Ergebnisverantwortung für das operative Geschäft mit rund 80 Mio. EUR Umsatz und 200 FTE an 12 Standorten.",
+          "kpi_ids": ["kpi_revenue", "kpi_fte", "kpi_sites"]
+        },
+        {
+          "id": "b_gl_otif",
+          "text": "OTIF in 24 Monaten um 12 Prozentpunkte gesteigert durch S&OP, Control Tower und Engpasssteuerung.",
+          "kpi_ids": ["kpi_otif"]
+        },
+        {
+          "id": "b_gl_cost",
+          "text": "Cost-to-serve um 8 % gesenkt, ohne Servicelevel zu unterschreiten.",
+          "kpi_ids": ["kpi_cts"]
+        },
+        {
+          "id": "b_gl_org",
+          "text": "Operations-Organisation neu geschnitten: acht Direct Reports, klare Verantwortungen für Netz, Transport und Warehousing.",
+          "kpi_ids": ["kpi_reports"]
+        },
+        {
+          "id": "b_gl_sap",
+          "text": "SAP-WM-Rollout an fünf Standorten fachlich geführt, parallel Excel-Schattenprozesse abgelöst.",
+          "kpi_ids": []
+        }
+      ],
+      "skill_ids": ["sk_pl", "sk_sop", "sk_otif", "sk_sap", "sk_leadership"]
+    },
+    {
+      "id": "exp_head_log",
+      "employer": "RheinFracht AG",
+      "title": "Leiter Logistik",
+      "start": "2015-01",
+      "end": "2020-02",
+      "location": "Duisburg",
+      "bullets": [
+        {
+          "id": "b_hl_3pl",
+          "text": "3PL-Ausschreibung für Kontraktlogistik geführt und zwei Dienstleister konsolidiert.",
+          "kpi_ids": []
+        },
+        {
+          "id": "b_hl_net",
+          "text": "Lager- und Transportnetz von 7 auf 5 Knoten neu designed, Transitzeit im Schnitt um einen Tag verkürzt.",
+          "kpi_ids": ["kpi_transit"]
+        },
+        {
+          "id": "b_hl_team",
+          "text": "Führung von 90 Mitarbeitenden in Schicht und Disposition.",
+          "kpi_ids": ["kpi_team90"]
+        }
+      ],
+      "skill_ids": ["sk_3pl", "sk_network", "sk_leadership"]
+    },
+    {
+      "id": "exp_pm_wh",
+      "employer": "AlpenStore GmbH",
+      "title": "Projektleiter Warehouse",
+      "start": "2010-06",
+      "end": "2014-12",
+      "location": "Rosenheim",
+      "bullets": [
+        {
+          "id": "b_pm_go",
+          "text": "Go-live eines automatisierten Kleinteilelagers; Hochlauf in 14 Wochen auf Zielleistung.",
+          "kpi_ids": []
+        }
+      ],
+      "skill_ids": ["sk_wh", "sk_projects"]
+    }
+  ],
+  "education": [
+    {
+      "id": "edu_kit",
+      "institution": "KIT Karlsruhe",
+      "degree": "Diplom-Wirtschaftsingenieur",
+      "field": "Logistik und Produktion",
+      "start": "2004-10",
+      "end": "2010-03"
+    }
+  ],
+  "skills": [
+    { "id": "sk_pl", "name": "P&L-Verantwortung", "aliases": ["Ergebnisverantwortung", "Profit and Loss"], "category": "leadership" },
+    { "id": "sk_leadership", "name": "Führung", "aliases": ["Leadership", "Personalführung", "Teamleitung"], "category": "leadership" },
+    { "id": "sk_sop", "name": "S&OP", "aliases": ["Sales and Operations Planning", "S+OP"], "category": "functional" },
+    { "id": "sk_otif", "name": "OTIF", "aliases": ["On Time In Full", "Liefertermintreue"], "category": "functional" },
+    { "id": "sk_sap", "name": "SAP WM", "aliases": ["SAP", "Warehouse Management"], "category": "technical" },
+    { "id": "sk_3pl", "name": "3PL-Steuerung", "aliases": ["Kontraktlogistik", "Dienstleistersteuerung"], "category": "functional" },
+    { "id": "sk_network", "name": "Netzwerkdesign", "aliases": ["Lagerstruktur", "Transportnetz"], "category": "functional" },
+    { "id": "sk_wh", "name": "Warehouse Operations", "aliases": ["Lagerwirtschaft", "Intralogistik"], "category": "functional" },
+    { "id": "sk_projects", "name": "Projektleitung", "aliases": ["Project Management", "Projektmanagement"], "category": "functional" }
+  ],
+  "languages": [
+    { "id": "lang_de", "name": "Deutsch", "level": "Muttersprache" },
+    { "id": "lang_en", "name": "Englisch", "level": "C1" }
+  ],
+  "certifications": [
+    { "id": "cert_apics", "name": "APICS CSCP", "year": "2016", "issuer": "ASCM" }
+  ],
+  "kpis": [
+    { "id": "kpi_revenue", "label": "Umsatzverantwortung", "value": "80 Mio. EUR", "raw": "80 Mio. EUR Umsatz", "experience_id": "exp_gl_ops" },
+    { "id": "kpi_fte", "label": "FTE", "value": "200", "raw": "200 FTE", "experience_id": "exp_gl_ops" },
+    { "id": "kpi_sites", "label": "Standorte", "value": "12", "raw": "12 Standorte", "experience_id": "exp_gl_ops" },
+    { "id": "kpi_otif", "label": "OTIF", "value": "+12 pp", "raw": "OTIF um 12 Prozentpunkte", "experience_id": "exp_gl_ops" },
+    { "id": "kpi_cts", "label": "Cost-to-serve", "value": "-8 %", "raw": "Cost-to-serve um 8 %", "experience_id": "exp_gl_ops" },
+    { "id": "kpi_reports", "label": "Direct Reports", "value": "8", "raw": "acht Direct Reports", "experience_id": "exp_gl_ops" },
+    { "id": "kpi_transit", "label": "Transitzeit", "value": "-1 Tag", "raw": "Transitzeit um einen Tag", "experience_id": "exp_head_log" },
+    { "id": "kpi_team90", "label": "Teamgröße", "value": "90", "raw": "90 Mitarbeitenden", "experience_id": "exp_head_log" }
+  ]
+}

@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}Einstellungen · ATS-Bewerbungs-APP{% endblock %}
+{% block content %}
+<header class="page-head">
+  <h1>Einstellungen</h1>
+  <p class="lede">Ollama-Host und Modell-Tags. Fast und strong dürfen identisch sein. Kein API-Key.</p>
+</header>
+
+{% if error %}
+<div class="banner banner-error" role="alert">{{ error }}</div>
+{% endif %}
+{% if saved %}
+<div class="banner banner-ok" role="status">Gespeichert.</div>
+{% endif %}
+
+<section class="card">
+  <h2>Ollama</h2>
+  <form method="post" action="/settings" class="form">
+    <label for="ollama_host">Host</label>
+    <input id="ollama_host" name="ollama_host" type="url" required
+           value="{{ settings_row.ollama_host }}"
+           placeholder="http://127.0.0.1:11434">
+
+    <label for="model_fast">Modell fast</label>
+    {% if models %}
+    <select id="model_fast" name="model_fast">
+      {% for m in models %}
+      <option value="{{ m }}" {% if m == settings_row.model_fast %}selected{% endif %}>{{ m }}</option>
+      {% endfor %}
+      {% if settings_row.model_fast not in models %}
+      <option value="{{ settings_row.model_fast }}" selected>{{ settings_row.model_fast }} (nicht installiert)</option>
+      {% endif %}
+    </select>
+    {% else %}
+    <input id="model_fast" name="model_fast" type="text" required value="{{ settings_row.model_fast }}">
+    <p class="meta">Keine Tags von Ollama gelesen. Namen manuell eintragen oder Ollama starten.</p>
+    {% endif %}
+
+    <label class="check">
+      <input type="checkbox" name="same_model" value="1"
+        {% if settings_row.model_fast == settings_row.model_strong %}checked{% endif %}
+        onchange="document.getElementById('strong-wrap').hidden=this.checked">
+      Ein Modell für beides
+    </label>
+
+    <div id="strong-wrap" {% if settings_row.model_fast == settings_row.model_strong %}hidden{% endif %}>
+      <label for="model_strong">Modell strong</label>
+      {% if models %}
+      <select id="model_strong" name="model_strong">
+        {% for m in models %}
+        <option value="{{ m }}" {% if m == settings_row.model_strong %}selected{% endif %}>{{ m }}</option>
+        {% endfor %}
+        {% if settings_row.model_strong not in models %}
+        <option value="{{ settings_row.model_strong }}" selected>{{ settings_row.model_strong }} (nicht installiert)</option>
+        {% endif %}
+      </select>
+      {% else %}
+      <input id="model_strong" name="model_strong" type="text" value="{{ settings_row.model_strong }}">
+      {% endif %}
+    </div>
+
+    <button type="submit" class="btn primary">Speichern</button>
+  </form>
+</section>
+
+<section class="card">
+  <h2>Alle Bewerberdaten löschen</h2>
+  <p class="meta">Unwiderruflich: DB-Einträge, Uploads, Generierungen. Settings bleiben.</p>
+  <form method="post" action="/settings/wipe" class="form"
+        onsubmit="return confirm('Wirklich ALLE Bewerberdaten löschen?');">
+    <label for="confirm">Bestätigung: LOESCHEN</label>
+    <input id="confirm" name="confirm" type="text" autocomplete="off">
+    <button type="submit" class="btn">Endgültig löschen</button>
+  </form>
+</section>
+
+<section class="card muted">
+  <h2>Status</h2>
+  <dl class="kv">
+    <dt>Ollama</dt><dd>{{ health.ollama }}</dd>
+    <dt>Installiert</dt>
+    <dd>{% if models %}{{ models|join(', ') }}{% else %}—{% endif %}</dd>
+  </dl>
+  <p class="meta">Defaults aus .env: fast={{ env_defaults.ollama_model_fast }}, strong={{ env_defaults.ollama_model_strong }}</p>
+</section>
+{% endblock %}

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local/schemas/role-detection.schema.json",
+  "title": "RoleDetection",
+  "type": "object",
+  "required": ["schema_version", "top", "candidates", "language", "form_of_address"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "language": { "type": "string", "enum": ["de", "en"] },
+    "form_of_address": { "type": "string", "enum": ["sie", "du", "unknown"] },
+    "formality": {
+      "type": "string",
+      "enum": ["formal", "neutral", "startup", "unknown"]
+    },
+    "industry_hints": { "type": "array", "items": { "type": "string" } },
+    "company_size_hint": {
+      "type": "string",
+      "enum": ["startup", "mittelstand", "konzern", "unknown"]
+    },
+    "injection_risk": { "type": "boolean", "default": false },
+    "top": { "$ref": "#/$defs/candidate" },
+    "candidates": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5,
+      "items": { "$ref": "#/$defs/candidate" }
+    },
+    "rationale": { "type": "string" }
+  },
+  "$defs": {
+    "candidate": {
+      "type": "object",
+      "required": ["role_family", "confidence", "label_de"],
+      "additionalProperties": false,
+      "properties": {
+        "role_family": {
+          "type": "string",
+          "enum": [
+            "ceo",
+            "coo",
+            "cfo",
+            "cso_sales",
+            "head_logistics",
+            "plant_ops",
+            "program",
+            "functional_expert",
+            "other"
+          ]
+        },
+        "label_de": { "type": "string" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    }
+  }
+}

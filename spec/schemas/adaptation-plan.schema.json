@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local/schemas/adaptation-plan.schema.json",
+  "title": "AdaptationPlan",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "role_family",
+    "experience_order",
+    "hidden_experience_ids",
+    "skill_order",
+    "summary_brief",
+    "keyword_bindings",
+    "gaps"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "role_family": { "type": "string" },
+    "experience_order": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^exp_" }
+    },
+    "hidden_experience_ids": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^exp_" }
+    },
+    "skill_order": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^sk_" }
+    },
+    "emphasis_kpi_ids": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^kpi_" }
+    },
+    "emphasis_bullet_ids": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^b_" }
+    },
+    "summary_brief": { "type": "string", "minLength": 20, "maxLength": 600 },
+    "keyword_bindings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["job_keyword", "fact_kind", "fact_id"],
+        "additionalProperties": false,
+        "properties": {
+          "job_keyword": { "type": "string" },
+          "fact_kind": { "type": "string", "enum": ["bullet", "skill", "kpi", "title"] },
+          "fact_id": { "type": "string" },
+          "via_alias": { "type": "boolean" }
+        }
+      }
+    },
+    "gaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["job_keyword", "severity", "message_de"],
+        "additionalProperties": false,
+        "properties": {
+          "job_keyword": { "type": "string" },
+          "severity": { "type": "string", "enum": ["must", "nice"] },
+          "message_de": { "type": "string" }
+        }
+      }
+    },
+    "warnings_de": { "type": "array", "items": { "type": "string" } }
+  }
+}

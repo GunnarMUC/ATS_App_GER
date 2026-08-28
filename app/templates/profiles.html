@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Rollenprofile{% endblock %}
+{% block content %}
+<header class="page-head"><h1>Rollenprofile</h1></header>
+<section class="card">
+  {% if not profiles %}<p class="meta">Noch keine Profile.</p>{% endif %}
+  <ul class="list">
+    {% for p in profiles %}
+    <li><strong>{{ p.name }}</strong> · {{ labels.get(p.role_family, p.role_family) }}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

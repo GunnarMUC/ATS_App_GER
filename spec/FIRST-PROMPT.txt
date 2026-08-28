@@ -1,0 +1,7 @@
+Lies AGENTS.md (Wurzel), dann spec/CONSTRAINTS.md, spec/MASTERPLAN.md, spec/MILESTONES.md.
+Implementiere ausschließlich Milestone M1.
+Kein Cloud-SDK in der App, kein Docker-Zwang, Bind 127.0.0.1:8000.
+llm_client tag-agnostisch, Health laut spec/LOCAL-LLM.md, Settings mit beliebigen Ollama-Tags.
+Fixtures in spec/fixtures/ nicht ändern, außer bei Syntaxfehlern.
+Wenn fertig: Tests für M1 und 8 Zeilen in spec/IMPLEMENTATION-LOG.md.
+Warte auf mein OK bevor M2.

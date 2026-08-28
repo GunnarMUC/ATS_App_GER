@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local/schemas/role-lens.schema.json",
+  "title": "RoleLens",
+  "description": "Stored reusable default lens (RoleProfile.lens_json). Subset of AdaptationPlan without job-specific gaps.",
+  "type": "object",
+  "required": ["schema_version", "role_family", "experience_order", "skill_order", "summary_brief"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "role_family": { "type": "string" },
+    "experience_order": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^exp_" }
+    },
+    "hidden_experience_ids": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^exp_" }
+    },
+    "skill_order": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^sk_" }
+    },
+    "emphasis_kpi_ids": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^kpi_" }
+    },
+    "summary_brief": { "type": "string" }
+  }
+}

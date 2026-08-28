@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Master-CV · ATS-Bewerbungs-APP{% endblock %}
+{% block content %}
+<header class="page-head">
+  <h1>Master-CV</h1>
+  <p class="lede">PDF, DOCX, TXT oder Markdown. Max. 8&nbsp;MB. Gescannte PDFs ohne Text werden abgelehnt.</p>
+</header>
+
+<section class="card">
+  <h2>Datei hochladen</h2>
+  <form
+    hx-post="/upload/cv"
+    hx-encoding="multipart/form-data"
+    hx-target="#upload-result"
+    hx-swap="innerHTML"
+  >
+    <label class="drop">
+      <span>Datei wählen</span>
+      <input type="file" name="file" accept=".pdf,.docx,.md,.txt,application/pdf">
+    </label>
+    <button type="submit" class="btn primary">Hochladen und Text lesen</button>
+  </form>
+</section>
+
+<section class="card">
+  <h2>Oder Text einfügen</h2>
+  <form hx-post="/upload/cv" hx-target="#upload-result" hx-swap="innerHTML">
+    <label for="paste_text">Lebenslauf-Text</label>
+    <textarea id="paste_text" name="paste_text" rows="12" placeholder="Lebenslauf hier einfügen…"></textarea>
+    <button type="submit" class="btn">Text übernehmen</button>
+  </form>
+</section>
+
+<div id="upload-result"></div>
+
+<section class="card muted">
+  <h2>Fixture (Entwicklung)</h2>
+  <p class="meta">Lädt die fiktiven Alex-Morgenstern-Fakten aus spec/fixtures.</p>
+  <button type="button" class="btn" id="load-fixture">Fixture-Master laden</button>
+</section>
+
+{% if cvs %}
+<section class="card">
+  <h2>Vorhanden</h2>
+  <ul class="list">
+    {% for cv in cvs %}
+    <li><a href="/cv/{{ cv.id }}">{{ cv.original_filename }}</a></li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+<script>
+document.getElementById('load-fixture')?.addEventListener('click', async () => {
+  const r = await fetch('/cv/load-fixture', { method: 'POST' });
+  const j = await r.json();
+  if (j.redirect) location.href = j.redirect;
+});
+</script>
+{% endblock %}

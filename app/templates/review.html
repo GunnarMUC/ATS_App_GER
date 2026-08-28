@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Review{% endblock %}
+{% block content %}
+<header class="page-head">
+  <h1>Review</h1>
+  <p class="lede">{{ job.title_raw }} · Plan {{ plan.status }}</p>
+</header>
+
+<section class="card">
+  <h2>Generieren</h2>
+  <form method="post" action="/jobs/{{ job.id }}/generate?type=both" class="btn-row">
+    <button class="btn primary" type="submit">CV + Anschreiben erzeugen</button>
+  </form>
+  <form method="post" action="/jobs/{{ job.id }}/generate?type=cv" style="display:inline">
+    <button class="btn" type="submit">Nur CV</button>
+  </form>
+  <form method="post" action="/jobs/{{ job.id }}/generate?type=cover" style="display:inline">
+    <button class="btn" type="submit">Nur Anschreiben</button>
+  </form>
+</section>
+
+{% if latest_cv %}
+<section class="card">
+  <h2>Lebenslauf v{{ latest_cv.version }}
+    {% if latest_cv.fact_guard_passed %}<span class="pill sev-info">Guard OK</span>
+    {% else %}<span class="pill sev-warn">Guard Fail</span>{% endif %}
+  </h2>
+  {% if not latest_cv.fact_guard_passed %}
+  <ul>{% for e in (latest_cv.structured_json.guard_errors or []) %}<li>{{ e }}</li>{% endfor %}</ul>
+  {% else %}
+  <div class="btn-row">
+    <a class="btn primary" href="/documents/{{ latest_cv.id }}/download?format=docx">DOCX</a>
+    <a class="btn" href="/documents/{{ latest_cv.id }}/download?format=pdf">PDF</a>
+    <a class="btn" href="/documents/{{ latest_cv.id }}/download?format=txt">TXT</a>
+  </div>
+  <pre class="preview">{{ (latest_cv.structured_json.cv.summary if latest_cv.structured_json and latest_cv.structured_json.cv else '') }}</pre>
+  {% endif %}
+</section>
+{% endif %}
+
+{% if latest_cover %}
+<section class="card">
+  <h2>Anschreiben v{{ latest_cover.version }}
+    {% if latest_cover.fact_guard_passed %}<span class="pill">OK</span>{% else %}<span class="pill">Fail</span>{% endif %}
+  </h2>
+  {% if latest_cover.fact_guard_passed %}
+  <div class="btn-row">
+    <a class="btn" href="/documents/{{ latest_cover.id }}/download?format=docx">DOCX</a>
+    <a class="btn" href="/documents/{{ latest_cover.id }}/download?format=txt">TXT</a>
+  </div>
+  <pre class="preview">{{ latest_cover.structured_json.text }}</pre>
+  {% else %}
+  <ul>{% for e in (latest_cover.structured_json.guard_errors or []) %}<li>{{ e }}</li>{% endfor %}</ul>
+  {% endif %}
+</section>
+{% endif %}
+
+{% if latest_cv and latest_cv.fact_guard_passed %}
+<section class="card">
+  <a class="btn primary" href="/jobs/{{ job.id }}/zip">ZIP herunterladen</a>
+</section>
+{% endif %}
+
+<p><a class="btn" href="/jobs/{{ job.id }}/plan">Zurück zum Plan</a></p>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Übersicht · ATS-Bewerbungs-APP{% endblock %}
+{% block content %}
+<header class="page-head">
+  <h1>Übersicht</h1>
+  <p class="lede">Ein Master-CV, viele rollenspezifische Sichten. Fakten gesperrt, nichts erfinden.</p>
+</header>
+
+{% if not cvs %}
+<section class="card empty">
+  <h2>Noch kein Master-CV</h2>
+  <p>Laden Sie Ihren Lebenslauf einmal hoch. Die Fakten werden später gesperrt.</p>
+  <p><a class="btn primary" href="/cv">Master-CV hochladen</a></p>
+</section>
+{% else %}
+<section class="card">
+  <h2>Master-CVs</h2>
+  <ul class="list">
+    {% for cv in cvs %}
+    <li>
+      <a href="/cv/{{ cv.id }}">{{ cv.original_filename }}</a>
+      <span class="meta">{{ cv.media_type }} · {{ cv.created_at }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="btn-row">
+    <a class="btn" href="/cv">Weiteren CV laden</a>
+    <a class="btn primary" href="/jobs/new">Neue Stelle</a>
+  </div>
+</section>
+{% endif %}
+
+<section class="card muted">
+  <h2>Status</h2>
+  <dl class="kv">
+    <dt>Ollama</dt><dd>{{ health.ollama }}</dd>
+    <dt>fast</dt><dd><code>{{ health.selected.fast }}</code> {% if health.fast_present %}✓{% else %}fehlt{% endif %}</dd>
+    <dt>strong</dt><dd><code>{{ health.selected.strong }}</code> {% if health.strong_present %}✓{% else %}fehlt{% endif %}</dd>
+  </dl>
+</section>
+{% endblock %}

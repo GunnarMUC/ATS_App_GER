@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "role_family": "coo",
+  "experience_order": ["exp_gl_ops", "exp_head_log", "exp_pm_wh"],
+  "hidden_experience_ids": [],
+  "skill_order": ["sk_otif", "sk_sop", "sk_leadership", "sk_sap", "sk_3pl", "sk_network", "sk_wh", "sk_pl"],
+  "emphasis_kpi_ids": ["kpi_otif", "kpi_cts", "kpi_fte", "kpi_sites"],
+  "emphasis_bullet_ids": ["b_gl_otif", "b_gl_cost", "b_gl_sap", "b_hl_3pl", "b_hl_net"],
+  "summary_brief": "Operative Führung eines Logistiknetzwerks: OTIF, S&OP, Cost-to-serve, 3PL und SAP-WM. P&L nur als Kontext, nicht als Leitmotiv.",
+  "keyword_bindings": [
+    { "job_keyword": "OTIF", "fact_kind": "kpi", "fact_id": "kpi_otif", "via_alias": false },
+    { "job_keyword": "S&OP", "fact_kind": "skill", "fact_id": "sk_sop", "via_alias": false },
+    { "job_keyword": "Control Tower", "fact_kind": "bullet", "fact_id": "b_gl_otif", "via_alias": true },
+    { "job_keyword": "3PL", "fact_kind": "skill", "fact_id": "sk_3pl", "via_alias": false },
+    { "job_keyword": "SAP-WM", "fact_kind": "skill", "fact_id": "sk_sap", "via_alias": false }
+  ],
+  "gaps": [],
+  "warnings_de": []
+}

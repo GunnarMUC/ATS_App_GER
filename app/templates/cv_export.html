@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Export · {{ cv.original_filename }}{% endblock %}
+{% block content %}
+<header class="page-head">
+  <h1>Master-CV exportieren</h1>
+  <p class="lede">Roh-Export der bestätigten Fakten, ohne Rollenlinse. Für ATS: DOCX bevorzugen.</p>
+</header>
+
+{% include "partials/ats_report.html" %}
+
+{% if has_facts %}
+<section class="card">
+  <h2>Download</h2>
+  <div class="btn-row">
+    <a class="btn primary" href="/cv/{{ cv.id }}/download?format=docx">DOCX</a>
+    <a class="btn" href="/cv/{{ cv.id }}/download?format=pdf">PDF</a>
+    <a class="btn" href="/cv/{{ cv.id }}/download?format=txt">TXT</a>
+  </div>
+  <p class="meta" style="margin-top:1rem">Für ATS: DOCX verwenden. PDF zusätzlich für den Menschen.</p>
+</section>
+{% else %}
+<section class="card">
+  <p>Noch keine Fakten. <a href="/cv/{{ cv.id }}/facts">Fakten prüfen</a></p>
+</section>
+{% endif %}
+
+<p>
+  <a class="btn" href="/cv/{{ cv.id }}/facts">Fakten</a>
+  <a class="btn" href="/cv/{{ cv.id }}">Rohtext</a>
+</p>
+{% endblock %}

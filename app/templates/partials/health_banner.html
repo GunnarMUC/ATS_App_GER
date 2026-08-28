@@ -1,0 +1,17 @@
+{% if health.ollama != 'connected' %}
+<div class="banner banner-warn" role="status">
+  Ollama ist nicht erreichbar. Läuft der Dienst? Host in den Einstellungen prüfen.
+</div>
+{% elif not health.fast_present or not health.strong_present %}
+<div class="banner banner-warn" role="status">
+  Gewähltes Modell fehlt in Ollama.
+  {% if not health.fast_present %}fast: <code>{{ health.selected.fast }}</code>{% endif %}
+  {% if not health.strong_present %}strong: <code>{{ health.selected.strong }}</code>{% endif %}
+  — im Terminal: <code>ollama pull …</code>
+</div>
+{% endif %}
+{% if health.privacy_note == 'ollama_cloud_tag' %}
+<div class="banner banner-info" role="status">
+  Dieses Modell-Tag sieht nach einem Cloud-Modell in Ollama aus. Dann verlassen die Daten den Rechner über Ollama.
+</div>
+{% endif %}

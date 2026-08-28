@@ -1,0 +1,35 @@
+<section class="card">
+  <h2>ATS-Strukturreport</h2>
+  {% if file_report %}
+  <h3>Quelldatei <span class="meta">Score {{ file_report.score_hint }}</span></h3>
+  {% if file_report.issues %}
+  <ul class="issues">
+    {% for issue in file_report.issues %}
+    <li class="sev-{{ issue.severity }}">
+      <span class="pill">{{ issue.severity }}</span> {{ issue.message_de }}
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="meta">Keine strukturellen Auffälligkeiten an der Quelldatei.</p>
+  {% endif %}
+  {% if file_report.notes_de %}
+  <ul class="notes">{% for n in file_report.notes_de %}<li>{{ n }}</li>{% endfor %}</ul>
+  {% endif %}
+  {% endif %}
+
+  {% if facts_report %}
+  <h3>Ausgabe-Fakten <span class="meta">Score {{ facts_report.score_hint }}</span></h3>
+  {% if facts_report.issues %}
+  <ul class="issues">
+    {% for issue in facts_report.issues %}
+    <li class="sev-{{ issue.severity }}">
+      <span class="pill">{{ issue.severity }}</span> {{ issue.message_de }}
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="meta">Fakten wirken ATS-tauglich (einspaltiger Builder).</p>
+  {% endif %}
+  {% endif %}
+</section>

@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}Anpassungsplan{% endblock %}
+{% block content %}
+<header class="page-head">
+  <h1>Anpassungsplan</h1>
+  <p class="lede">
+    Rolle: <strong>{{ labels.get(role_family, role_family) }}</strong>.
+    Keine Fakten werden geändert — nur Reihenfolge und Betonung.
+  </p>
+</header>
+
+<section class="card">
+  <h2>Summary-Richtung</h2>
+  <form method="post" action="/jobs/{{ job.id }}/plan/{{ plan.id }}/confirm" class="form" id="plan-form">
+    <textarea name="summary_brief" rows="4">{{ plan_json.summary_brief }}</textarea>
+    <input type="hidden" name="experience_order_csv" id="experience_order_csv"
+           value="{{ plan_json.experience_order|join(',') }}">
+    <input type="hidden" name="hidden_csv" id="hidden_csv"
+           value="{{ plan_json.hidden_experience_ids|join(',') }}">
+
+    <h2>Berufserfahrung (Reihenfolge)</h2>
+    <ul class="list sortable" id="exp-list">
+      {% for eid in plan_json.experience_order %}
+      {% set exp = exp_map.get(eid) %}
+      {% if exp %}
+      <li draggable="true" data-id="{{ eid }}">
+        <strong>{{ exp.title }}</strong>, {{ exp.employer }}
+        <label class="check"><input type="checkbox" class="hide-exp" value="{{ eid }}"
+          {% if eid in plan_json.hidden_experience_ids %}checked{% endif %}> ausblenden</label>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+
+    <h2>Skills (Top)</h2>
+    <p class="meta">
+      {% for sid in plan_json.skill_order[:10] %}
+        {{ skill_map[sid].name if skill_map.get(sid) else sid }}{% if not loop.last %}, {% endif %}
+      {% endfor %}
+    </p>
+
+    <h2>Keyword-Matrix</h2>
+    <ul class="list">
+      {% for b in plan_json.keyword_bindings or [] %}
+      <li class="sev-info"><span class="pill">ok</span> {{ b.job_keyword }} → {{ b.fact_kind }} {{ b.fact_id }}</li>
+      {% endfor %}
+      {% for g in plan_json.gaps or [] %}
+      <li class="sev-warn"><span class="pill">lücke</span> {{ g.message_de }}</li>
+      {% endfor %}
+    </ul>
+
+    {% if plan_json.warnings_de %}
+    <div class="banner banner-info">
+      {% for w in plan_json.warnings_de %}<div>{{ w }}</div>{% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="btn-row">
+      <button type="submit" class="btn primary">Plan bestätigen und weiter</button>
+      <button type="button" class="btn" id="save-profile">Als Rollenprofil speichern</button>
+    </div>
+  </form>
+</section>
+
+<script src="/static/vendor/Sortable.min.js"></script>
+<script>
+const list = document.getElementById('exp-list');
+if (window.Sortable && list) {
+  Sortable.create(list, {
+    animation: 120,
+    onSort() { syncOrder(); }
+  });
+}
+function syncOrder() {
+  const ids = [...list.querySelectorAll('li')].map(li => li.dataset.id);
+  document.getElementById('experience_order_csv').value = ids.join(',');
+  const hidden = [...document.querySelectorAll('.hide-exp:checked')].map(cb => cb.value);
+  document.getElementById('hidden_csv').value = hidden.join(',');
+}
+document.querySelectorAll('.hide-exp').forEach(cb => cb.addEventListener('change', syncOrder));
+document.getElementById('plan-form')?.addEventListener('submit', syncOrder);
+document.getElementById('save-profile')?.addEventListener('click', async () => {
+  syncOrder();
+  const roleFamily = {{ role_family|tojson }};
+  const body = {
+    name: ({{ labels.get(role_family, role_family)|tojson }}) + ' Profil',
+    role_family: roleFamily,
+    lens_json: {
+      schema_version: '1.0',
+      role_family: roleFamily,
+      experience_order: document.getElementById('experience_order_csv').value.split(',').filter(Boolean),
+      hidden_experience_ids: document.getElementById('hidden_csv').value.split(',').filter(Boolean),
+      skill_order: {{ plan_json.skill_order|tojson }},
+      summary_brief: document.querySelector('[name=summary_brief]').value
+    }
+  };
+  const r = await fetch('/api/profiles', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(body)
+  });
+  if (r.ok) alert('Profil gespeichert');
+});
+</script>
+{% endblock %}

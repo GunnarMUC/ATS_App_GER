@@ -1,0 +1,18 @@
+<section class="card">
+  <h2>Text extrahiert</h2>
+  <p class="meta">
+    <strong>{{ cv.original_filename }}</strong>
+    · {{ cv.media_type }}
+    · {{ cv.raw_text|length }} Zeichen
+  </p>
+  {% if warnings %}
+  <p class="meta">Hinweise: {{ warnings|join(', ') }}</p>
+  {% endif %}
+  <p><a class="btn" href="/cv/{{ cv.id }}">Details öffnen</a></p>
+  <details open>
+    <summary>Rohtext (Vorschau)</summary>
+    <pre class="preview">{{ cv.raw_text[:8000] }}{% if cv.raw_text|length > 8000 %}
+
+…{% endif %}</pre>
+  </details>
+</section>

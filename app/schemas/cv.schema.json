@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local/schemas/cv.schema.json",
+  "title": "CVStructure",
+  "type": "object",
+  "required": ["schema_version", "personal", "experience", "education", "skills"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "language": { "type": "string", "enum": ["de", "en"] },
+    "personal": {
+      "type": "object",
+      "required": ["full_name"],
+      "additionalProperties": false,
+      "properties": {
+        "full_name": { "type": "string", "minLength": 1 },
+        "city": { "type": "string" },
+        "country": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "linkedin": { "type": "string" },
+        "xing": { "type": "string" },
+        "address_line": { "type": "string" },
+        "birth_date": { "type": ["string", "null"] },
+        "nationality": { "type": ["string", "null"] },
+        "marital_status": { "type": ["string", "null"] }
+      }
+    },
+    "summary": { "type": "string", "default": "" },
+    "experience": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/experience" }
+    },
+    "education": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/education" }
+    },
+    "skills": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/skill" }
+    },
+    "languages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "level"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "level": { "type": "string" }
+        }
+      }
+    },
+    "certifications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "year": { "type": ["string", "null"] },
+          "issuer": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "kpis": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/kpi" }
+    }
+  },
+  "$defs": {
+    "experience": {
+      "type": "object",
+      "required": ["id", "employer", "title", "start", "end", "bullets"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^exp_" },
+        "employer": { "type": "string" },
+        "title": { "type": "string" },
+        "start": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}$" },
+        "end": {
+          "oneOf": [
+            { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}$" },
+            { "const": "present" }
+          ]
+        },
+        "location": { "type": "string" },
+        "bullets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "text"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string", "pattern": "^b_" },
+              "text": { "type": "string" },
+              "kpi_ids": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "skill_ids": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "education": {
+      "type": "object",
+      "required": ["id", "institution", "degree"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^edu_" },
+        "institution": { "type": "string" },
+        "degree": { "type": "string" },
+        "field": { "type": "string" },
+        "start": { "type": ["string", "null"] },
+        "end": { "type": ["string", "null"] }
+      }
+    },
+    "skill": {
+      "type": "object",
+      "required": ["id", "name"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^sk_" },
+        "name": { "type": "string" },
+        "aliases": { "type": "array", "items": { "type": "string" } },
+        "category": {
+          "type": "string",
+          "enum": ["leadership", "functional", "technical", "language", "other"]
+        }
+      }
+    },
+    "kpi": {
+      "type": "object",
+      "required": ["id", "label", "value"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^kpi_" },
+        "label": { "type": "string" },
+        "value": { "type": "string" },
+        "raw": { "type": "string" },
+        "experience_id": { "type": "string" }
+      }
+    }
+  }
+}

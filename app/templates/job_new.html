@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Neue Stelle{% endblock %}
+{% block content %}
+<header class="page-head">
+  <h1>Stelle anlegen</h1>
+  <p class="lede">Anzeige einfügen oder Datei laden. Kein Scraping.</p>
+</header>
+{% if not has_lock %}
+<div class="banner banner-warn">Zuerst Master-CV-Fakten sperren — sonst kein Anpassungsplan.</div>
+{% endif %}
+<section class="card">
+  <form method="post" action="/jobs" enctype="multipart/form-data" class="form">
+    <label for="text">Stellenanzeige</label>
+    <textarea id="text" name="text" rows="14" placeholder="Stellenanzeige hier einfügen…"></textarea>
+    <label for="file">Oder Datei</label>
+    <input id="file" type="file" name="file" accept=".pdf,.docx,.md,.txt">
+    <button type="submit" class="btn primary">Analysieren</button>
+  </form>
+</section>
+{% endblock %}

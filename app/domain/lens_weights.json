@@ -1,0 +1,132 @@
+{
+  "comment": "Terme nach aliases_de-Normalisierung (lowercase, ß→ss, Bindestriche/Spaces weg). Ranker boostet Hits in Experience-Titel/Bullets/Skills. Keine FactLock-IDs — gilt für jeden Master.",
+  "margin_for_top1": 0.15,
+  "role_family_weights": {
+    "ceo": {
+      "terms": [
+        "geschaeftsfuehrer",
+        "ceo",
+        "managingdirector",
+        "vorstand",
+        "pandl",
+        "ergebnisverantwortung",
+        "beirat",
+        "gesellschafter",
+        "organisation",
+        "wachstum",
+        "strategie",
+        "stakeholder",
+        "gesamtverantwortung",
+        "fuehrungskraefte"
+      ],
+      "downweight_terms": [
+        "otif",
+        "shopfloor",
+        "schicht",
+        "disposition",
+        "controltower"
+      ]
+    },
+    "coo": {
+      "terms": [
+        "coo",
+        "geschaeftsleitungoperations",
+        "leiteroperations",
+        "chiefoperatingofficer",
+        "otif",
+        "sop",
+        "costtoserve",
+        "netzwerk",
+        "3pl",
+        "delivery",
+        "prozesse",
+        "controltower",
+        "transformation",
+        "standorte"
+      ],
+      "downweight_terms": [
+        "beirat",
+        "gesellschafter",
+        "strategie",
+        "anorganisch"
+      ]
+    },
+    "cfo": {
+      "terms": [
+        "cfo",
+        "finanz",
+        "controlling",
+        "workingcapital",
+        "bilanz",
+        "ifrs",
+        "treasury"
+      ],
+      "downweight_terms": []
+    },
+    "cso_sales": {
+      "terms": [
+        "cso",
+        "vertrieb",
+        "pipeline",
+        "keyaccount",
+        "sales",
+        "umsatzverantwortung"
+      ],
+      "downweight_terms": []
+    },
+    "head_logistics": {
+      "terms": [
+        "logistikleiter",
+        "leiterlogistik",
+        "headoflogistics",
+        "supplychain",
+        "lager",
+        "transport",
+        "otif",
+        "3pl"
+      ],
+      "downweight_terms": [
+        "beirat",
+        "gesamtverantwortung"
+      ]
+    },
+    "plant_ops": {
+      "terms": [
+        "werkleiter",
+        "plantmanager",
+        "oee",
+        "produktion",
+        "safety",
+        "schicht"
+      ],
+      "downweight_terms": []
+    },
+    "program": {
+      "terms": [
+        "programdirector",
+        "transformation",
+        "governance",
+        "change",
+        "multiprojekt",
+        "pmo"
+      ],
+      "downweight_terms": []
+    },
+    "functional_expert": {
+      "terms": [
+        "spezialist",
+        "expert",
+        "fachlich",
+        "referent"
+      ],
+      "downweight_terms": [
+        "geschaeftsfuehrer",
+        "coo"
+      ]
+    },
+    "other": {
+      "terms": [],
+      "downweight_terms": []
+    }
+  }
+}
