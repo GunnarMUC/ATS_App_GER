@@ -193,6 +193,26 @@ code { font-family: var(--mono); font-size: .88em; }
 }
 .card h3 { font-size: 1rem; margin: .75rem 0 .4rem; }
 
+.table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+.table th, .table td { text-align: left; padding: .45rem .35rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+.table th { color: var(--muted); font-weight: 600; font-size: .78rem; text-transform: uppercase; }
+.inline-form { display: inline-block; margin: .25rem 0 0; }
+.inline-form select { max-width: 11rem; padding: .3rem .4rem; }
+.stage-offen { background: var(--info-bg); color: var(--info); }
+.stage-eingereicht { background: var(--accent-soft); color: var(--accent); }
+.stage-interview { background: #f3e8ff; color: #5b21b6; }
+.stage-absage { background: var(--err-bg); color: var(--err); }
+.stage-angebot { background: var(--warn-bg); color: var(--warn); }
+.stage-zusage { background: var(--ok-bg); color: var(--ok); }
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.compare .col { min-width: 0; }
+.diff-moved { background: var(--info-bg); }
+.diff-hidden { background: var(--warn-bg); text-decoration: line-through; }
+.diff-skill { background: var(--ok-bg); }
+@media (max-width: 720px) {
+  .compare { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 720px) {
   .layout { grid-template-columns: 1fr; }
   .nav { flex-direction: row; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; }

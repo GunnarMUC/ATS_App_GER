@@ -21,7 +21,7 @@ Die App läuft **nur auf Ihrem Rechner**. Sie schickt Ihre Daten nicht an OpenAI
 
 ## Was die App macht (in einem Satz)
 
-Sie hinterlegen Ihren Werdegang **einmal** (Fakten werden gesperrt). Für jede Stelle wählt die App eine **Rollenlinse** (z. B. CEO vs. COO): andere Reihenfolge, anderes Profil-Summary, andere Betonung — **ohne** Arbeitgeber, Daten oder Zahlen zu erfinden.
+Sie hinterlegen Ihren Werdegang **einmal** (Fakten werden gesperrt). Für jede Stelle wählt die App eine **Rollenlinse** (CEO, COO, CFO, CTO, Vertrieb, HR, Projekt, …): andere Reihenfolge, anderes Profil-Summary, andere Betonung — **ohne** Arbeitgeber, Daten oder Zahlen zu erfinden.
 
 | Ohne diese App | Mit dieser App |
 |---|---|
@@ -116,7 +116,7 @@ copy .env.example .env
 
 Die Datei `.env` müssen Sie in der Regel **nicht** ändern. Standard:
 
-- App nur unter `127.0.0.1` (nicht im ganzen Netzwerk)
+- App nur unter `127.0.0.1` (nicht im ganzen Netzwerk). Anderer Host → Start bricht ab, außer Sie setzen bewusst `APP_ALLOW_NONLOCAL=true`.
 - Ollama unter `http://127.0.0.1:11434`
 
 ### Schritt 4: App starten
@@ -191,8 +191,9 @@ Dann: **Plan bestätigen und weiter**.
 
 1. **CV + Anschreiben erzeugen** (oder nur CV / nur Anschreiben)  
 2. Status **Guard OK** = FactGuard hat keine erfundenen Arbeitgeber/Zahlen gefunden  
-3. Download: DOCX / PDF / TXT  
-4. **ZIP** = Bewerbungsmappe mit beiden Dokumenten + kurzer `INHALT.txt`
+3. **Master vs. Rolle vergleichen** — gesperrte Fakten links, rollenspezifische Sicht rechts  
+4. Download: DOCX / PDF / TXT  
+5. **ZIP** = Bewerbungsmappe mit beiden Dokumenten + kurzer `INHALT.txt`
 
 **Empfehlung für ATS (Personio, SuccessFactors, Softgarden, …):**  
 → **DOCX** hochladen. PDF zusätzlich für Menschen im Versand.
@@ -204,7 +205,8 @@ Dann: **Plan bestätigen und weiter**.
 1. App + Ollama starten  
 2. Neue Stelle einfügen  
 3. Rolle und Plan in 1–2 Minuten bestätigen  
-4. Generieren → ZIP  
+4. Generieren → Vergleich prüfen → ZIP  
+5. Auf **Übersicht** den Bewerbungsstatus setzen (offen / eingereicht / Interview / …)
 
 Der Master-CV bleibt gesperrt, bis Sie bewusst neu ableiten.
 
@@ -214,20 +216,22 @@ Der Master-CV bleibt gesperrt, bis Sie bewusst neu ableiten.
 
 | Menü | Zweck |
 |---|---|
-| **Übersicht** | Start, Status Ollama, letzte CVs |
+| **Übersicht** | Master-CVs, Bewerbungstabelle mit Status, Ollama |
 | **Master-CV** | Upload, Fakten, Schloss, Export roh |
-| **Stellen** | Anzeige → Rolle → Plan → Review |
+| **Stellen** | Anzeige → Rolle → Plan → Review → Vergleich |
 | **Profile** | Gespeicherte Rollenlinsen (keine zweiten Biografien) |
-| **Einstellungen** | Ollama-Host, Modelle, alle Daten löschen |
+| **Einstellungen** | Ollama-Host, Modelle, Backup/Restore-ZIP, alle Daten löschen |
 
 ---
 
 ## Datenschutz in Klartext
 
-- Die App bindet standardmäßig nur **127.0.0.1** — nicht erreichbar aus dem WLAN für andere Geräte.  
+- Die App bindet nur **127.0.0.1**. Ein anderer Host startet nicht, außer `APP_ALLOW_NONLOCAL=true`.  
+- Formulare sind CSRF-geschützt (lokales Token).  
 - **Kein** eingebauter OpenAI-/Anthropic-/xAI-Client, **keine** Telemetrie.  
 - Einziger Netz-Kontakt der App: **Ollama** (meist localhost).  
 - Uploads und Ergebnisse liegen unter `data/` auf Ihrer Festplatte.  
+- **Einstellungen → Daten:** Backup-ZIP (optional mit Passwort) und Restore.  
 - **Einstellungen → Alle Bewerberdaten löschen** (Bestätigungswort `LOESCHEN`) löscht DB, Uploads und Generierungen unwiderruflich.
 
 ---
@@ -255,6 +259,14 @@ Danach in den Einstellungen neu wählen und speichern.
 - Datei zu groß? Max. **8 MB**  
 - Erlaubt: **.pdf .docx .md .txt**  
 - Scan-PDF ohne Text → in v1 nicht unterstützt → DOCX oder Klartext nutzen  
+
+### App startet nicht: „APP_HOST ist nicht Loopback“
+
+Die App darf standardmäßig nur auf `127.0.0.1` lauschen. Bewusst im Netz: in `.env` `APP_ALLOW_NONLOCAL=true` setzen — dann sind Bewerberdaten im LAN erreichbar.
+
+### Backup / Umzug auf einen anderen Rechner
+
+Einstellungen → **Daten** → Backup-ZIP. Auf dem Zielrechner Restore aus derselben ZIP. Optional Passwort (AES).
 
 ### Port 8000 schon belegt
 
@@ -305,7 +317,7 @@ Spec-Karte: [`spec/README.md`](spec/README.md) · Vertrag: [`spec/MASTERPLAN.md`
 
 ## English summary
 
-Local single-user web app for German/Austrian/Swiss job applications: one locked master CV, role-specific views (e.g. CEO vs COO), ATS-safe DOCX/PDF/TXT/ZIP. The app talks only to **your** Ollama on localhost (any tag you install). No cloud SDK inside the app. No Docker. No API key.
+Local single-user web app for German/Austrian/Swiss job applications: one locked master CV, role-specific views (CEO, COO, CFO, CTO, …), application dashboard, side-by-side compare, backup ZIP. ATS-safe DOCX/PDF/TXT/ZIP. The app talks only to **your** Ollama on localhost (any tag you install). No cloud SDK inside the app. No Docker. No API key. Loopback bind is enforced.
 
 1. Install Python 3.12 + [Ollama](https://ollama.com) + pull any instruct model  
 2. `python3.12 -m venv .venv` → activate → `pip install -r requirements.txt` → `cp .env.example .env`  

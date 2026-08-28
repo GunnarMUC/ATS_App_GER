@@ -12,10 +12,39 @@ from sqlalchemy.pool import StaticPool
 os.environ.setdefault("DATA_DIR", str(Path(__file__).resolve().parent / "_testdata"))
 os.environ.setdefault("OLLAMA_HOST", "http://127.0.0.1:11434")
 os.environ.setdefault("DEBUG", "false")
+os.environ.setdefault("APP_HOST", "127.0.0.1")
 
 from app.config import get_settings
 from app.database import Base, get_db
 from app.main import app
+
+_SAFE = {"GET", "HEAD", "OPTIONS", "TRACE"}
+
+
+def _csrf_client(inner: TestClient) -> TestClient:
+    inner.get("/health")
+    orig = inner.request
+
+    def hooked(method, url, **kwargs):
+        if str(method).upper() not in _SAFE:
+            token = inner.cookies.get("csrf_token")
+            if not token:
+                inner.get("/health")
+                token = inner.cookies.get("csrf_token")
+            headers = dict(kwargs.get("headers") or {})
+            lower = {k.lower() for k in headers}
+            if token and "x-csrf-token" not in lower:
+                headers["X-CSRF-Token"] = token
+            kwargs["headers"] = headers
+            data = kwargs.get("data")
+            if isinstance(data, dict) and token and "csrf_token" not in data:
+                data = dict(data)
+                data["csrf_token"] = token
+                kwargs["data"] = data
+        return orig(method, url, **kwargs)
+
+    inner.request = hooked  # type: ignore[method-assign]
+    return inner
 
 
 @pytest.fixture()
@@ -55,7 +84,7 @@ def client(tmp_path, monkeypatch):
 
     app.dependency_overrides[get_db] = _override
     with TestClient(app) as c:
-        yield c
+        yield _csrf_client(c)
     app.dependency_overrides.clear()
     get_settings.cache_clear()
 

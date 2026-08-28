@@ -24,7 +24,7 @@ Ein Wizard + ein Dashboard. Keine zehn Hauptmenüs.
 ### 1. Übersicht
 
 Leerzustand: CTA „Master-CV hochladen“.  
-Danach: Karten „letzte Stelle“, erkannter Rollenfokus, letzter Score/Coverage, Buttons „neue Stelle“, „CV erzeugen“ nur wenn Plan existiert.
+Danach: Master-CV-Liste plus **Bewerbungstabelle** (Stelle, Rolle, Status-Badge offen/eingereicht/interview/absage/angebot/zusage, letzter CV, Vergleichslink). Status ist direkt änderbar.
 
 ### 2. Master-CV
 

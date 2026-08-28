@@ -121,12 +121,8 @@ def build_plan_skeleton(
         for kw in must:
             if find_in_text(kw, blob):
                 sc += 1.0
-        # CEO boost P&L-ish
-        if role_family == "ceo" and any(
-            x in bn for x in ("umsatz", "mio", "fte", "report", "ergebnis")
-        ):
-            sc += 0.8
-        if role_family == "coo" and any(x in bn for x in ("otif", "cost", "standort", "cts")):
+        kpi_terms = [normalize_term(t) for t in (cfg.get("kpi_terms") or [])]
+        if any(x and x in bn for x in kpi_terms):
             sc += 0.8
         emphasis_kpis.append((kpi["id"], sc))
     emphasis_kpis.sort(key=lambda x: x[1], reverse=True)
@@ -193,7 +189,17 @@ def _template_brief(role_family: str, kpi_ids: list[str], facts: dict[str, Any])
         "ceo": "P&L, Organisation, unternehmerische Ownership",
         "coo": "OTIF, S&OP, Delivery, operative Exzellenz",
         "cfo": "Finanzen, Controlling, Kapital",
+        "cso_sales": "Pipeline, Key Accounts, Wachstum",
+        "cto": "Technologie, Architektur, Engineering-Organisation",
+        "chro": "Personal, Talent, Organisation",
+        "head_ops": "Tagesgeschäft, SLA, operative Prozesse",
         "head_logistics": "Netz, Lager, Transport, OTIF",
+        "plant_ops": "Produktion, OEE, Safety",
+        "program": "Governance, Change, Multi-Projekt",
+        "project": "Scope, Meilensteine, Stakeholder",
+        "consultant": "Analyse, Empfehlung, Mandanten",
+        "product": "Roadmap, Discovery, Go-to-Market",
+        "eng_lead": "Engineering-Führung, Plattform, Delivery",
     }.get(role_family, "rollenspezifische Schwerpunkte aus den Fakten")
     extra = ("; ".join(bits)) if bits else ""
     text = f"{label}: {focus}."

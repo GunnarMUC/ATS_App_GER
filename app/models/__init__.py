@@ -1,5 +1,6 @@
 from app.models.orm import (
     AdaptationPlan,
+    Application,
     AppSettings,
     FactLock,
     GeneratedDocument,
@@ -11,6 +12,7 @@ from app.models.orm import (
 
 __all__ = [
     "AdaptationPlan",
+    "Application",
     "AppSettings",
     "FactLock",
     "GeneratedDocument",

@@ -8,7 +8,7 @@ from typing import Any
 
 from app.domain.normalize import normalize_term
 from app.domain.role_taxonomy import LABELS_DE, ROLE_FAMILIES
-from app.services.keyword_match import expand_aliases, find_in_text
+from app.services.keyword_match import expand_aliases, find_in_text, load_alias_map
 
 _WEIGHTS_PATH = Path(__file__).resolve().parents[1] / "domain" / "lens_weights.json"
 
@@ -25,6 +25,11 @@ INJECTION_PATTERNS = [
 @lru_cache
 def load_weights() -> dict[str, Any]:
     return json.loads(_WEIGHTS_PATH.read_text(encoding="utf-8"))
+
+
+def clear_domain_caches() -> None:
+    load_weights.cache_clear()
+    load_alias_map.cache_clear()
 
 
 def detect_injection(text: str) -> bool:
@@ -85,18 +90,19 @@ def score_roles(job_text: str) -> dict[str, Any]:
                 s -= 0.8
         scores[family] = max(0.0, s)
 
-    # title line + body signals
     first_line = (raw.strip().splitlines() or [""])[0]
     fl = normalize_term(first_line)
-    if any(x in fl for x in ("ceo", "geschaeftsfuehrer", "managingdirector", "vorstandsvorsitz")):
-        scores["ceo"] += 4.0
-    if "coo" in fl or "chiefoperatingofficer" in fl:
-        scores["coo"] += 4.0
+    for family, cfg in families.items():
+        if family not in scores:
+            continue
+        for term in cfg.get("title_terms") or []:
+            v = normalize_term(term)
+            if v and v in fl:
+                scores[family] += 4.0
+                break
     if "geschaeftsleitungoperations" in fl or ("geschaeftsleitung" in fl and "operation" in fl):
         scores["coo"] += 3.5
         scores["ceo"] -= 0.5
-    if "leiterlogistik" in fl or "headoflogistics" in fl or "logistikleiter" in fl:
-        scores["head_logistics"] += 2.5
     # body disambiguation: CEO ads stress P&L/Beirat; COO stress OTIF/S&OP
     if any(x in text_n for x in ("beirat", "gesellschafter", "gesamtverantwortung", "pandl")):
         scores["ceo"] += 2.0

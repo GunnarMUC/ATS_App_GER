@@ -78,3 +78,15 @@ Fertig:
 Tests: gesamter Suite grün (Heuristik + Guard + Happy-Path ZIP).
 
 LLM-Calls optional (use_llm); Default-Pfad läuft ohne Ollama-Generierung über Ranker/Templates.
+
+## Update 1 — P1
+
+Fertig:
+
+- Rollenfamilien: `cto`, `chro`, `head_ops`, `project`, `consultant`, `product`, `eng_lead`; CFO/CSO-Gewichte und Fixtures
+- Application-ORM + Dashboard-Status (offen…zusage), Alembic 002
+- Compare `/cv/compare/{job_id}` (Master vs. Plan, FactGuard)
+- Backup/Restore ZIP, optionales AES-Passwort (`pyzipper`)
+- CSRF Double-Submit (403 ohne Token); Loopback-Start hart außer `APP_ALLOW_NONLOCAL=true`
+
+P2 nicht in diesem Schritt: LLM-Mocks, Keyword-Gap-Vorschläge, Alembic-only-Boot, Rollen-Templates, OCR.

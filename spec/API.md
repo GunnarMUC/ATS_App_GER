@@ -10,11 +10,14 @@ Basis: `http://127.0.0.1:8000`
 - `GET /settings` Seite
 - `PUT /settings` JSON `{ "ollama_host", "model_fast", "model_strong" }` — Tags frei, dürfen identisch sein
 - `POST /settings/wipe` 2-Klick-Löschen aller Bewerberdaten
+- `GET /settings/backup` und `POST /settings/backup` → ZIP (`ats_app.db` + uploads + generated), optional `password`
+- `POST /settings/restore` ZIP-Upload, optional `password`
 
 ## Pages (volle Templates)
 
-- `GET /`
+- `GET /` Dashboard inkl. Bewerbungstabelle
 - `GET /cv`
+- `GET /cv/compare/{job_id}` Master vs. rollenspezifischer Plan
 - `GET /jobs/new`
 - `GET /jobs/{id}`
 - `GET /jobs/{id}/plan`
@@ -38,6 +41,13 @@ Basis: `http://127.0.0.1:8000`
 - `POST /jobs/{id}/plan` erzeugt Ranker-Skelett, optional LLM-Brief, AdaptationPlan (draft)
 - `PUT /jobs/{id}/plan/{plan_id}` Nutzer-Edits (Order, Hidden, role override)
 - `POST /jobs/{id}/plan/{plan_id}/confirm`
+
+## Bewerbungen
+
+- `POST /applications` Form `job_id` — legt Application an (`stage=offen`)
+- `POST /applications/{id}/stage` Form `stage`
+- `POST /applications/{id}/notes` Form `notes`
+- `POST /applications/{id}/delete`
 
 ## Profile
 

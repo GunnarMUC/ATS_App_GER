@@ -2,7 +2,7 @@
 
 ## One-liner
 
-Lokale App, die aus einem gesperrten Master-CV und einer Stelle einen **rollenspezifischen ATS-CV** plus Anschreiben baut — CEO-Bewerbung und COO-Bewerbung sind zwei Sichten, nicht zwei Lebensläufe.
+Lokale App, die aus einem gesperrten Master-CV und einer Stelle einen **rollenspezifischen ATS-CV** plus Anschreiben baut — CEO-, COO-, CFO- oder CTO-Bewerbung sind Sichten auf dieselben Fakten, nicht zwei Lebensläufe. Bewerbungsstatus, Vorher/Nachher-Vergleich und Backup bleiben auf dem Rechner.
 
 ## Zielperson
 

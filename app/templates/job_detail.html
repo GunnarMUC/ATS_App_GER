@@ -23,6 +23,7 @@
     {% endfor %}
   </ul>
   <form method="post" action="/jobs/{{ job.id }}/role" class="form">
+    {% include "partials/csrf.html" %}
     <label for="role_family">Rolle festlegen</label>
     <select id="role_family" name="role_family">
       {% for f in families %}

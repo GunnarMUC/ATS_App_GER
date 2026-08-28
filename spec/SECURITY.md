@@ -59,8 +59,17 @@ Maßnahmen:
 
 ## Threat: Local Server Exposure
 
-- README und Health-UI weisen darauf hin: nicht auf `0.0.0.0` binden, wenn man in öffentlichen Netzen sitzt.
-- Keine Auth in v1 **weil** Loopback-only. Wird `0.0.0.0` gewählt, muss die App beim Start eine Warnung loggen und im UI banner zeigen.
+- Bind nur Loopback. `APP_HOST` nicht in `{127.0.0.1, localhost, ::1}` → **Start bricht ab**, außer `APP_ALLOW_NONLOCAL=true`.
+- Keine Auth in v1 **weil** Loopback enforced. Der Override ist bewusst und laut.
+
+## Threat: CSRF
+
+Loopback senkt das Risiko, schließt es nicht. Alle unsicheren Methoden (POST/PUT/PATCH/DELETE) brauchen ein Double-Submit-Token:
+
+- Cookie `csrf_token` (nicht HttpOnly, `SameSite=Strict`)
+- Hidden-Field `csrf_token` in Formularen und/oder Header `X-CSRF-Token`
+- Fehlt das Token oder stimmt es nicht → **403**
+- Ausnahmen: GET/HEAD/OPTIONS, `/health`, `/static`
 
 ## Threat: Sensitive Felder im Output
 

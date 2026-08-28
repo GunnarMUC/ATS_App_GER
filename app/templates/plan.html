@@ -12,6 +12,7 @@
 <section class="card">
   <h2>Summary-Richtung</h2>
   <form method="post" action="/jobs/{{ job.id }}/plan/{{ plan.id }}/confirm" class="form" id="plan-form">
+    {% include "partials/csrf.html" %}
     <textarea name="summary_brief" rows="4">{{ plan_json.summary_brief }}</textarea>
     <input type="hidden" name="experience_order_csv" id="experience_order_csv"
            value="{{ plan_json.experience_order|join(',') }}">

@@ -14,6 +14,7 @@
     hx-target="#upload-result"
     hx-swap="innerHTML"
   >
+    {% include "partials/csrf.html" %}
     <label class="drop">
       <span>Datei wählen</span>
       <input type="file" name="file" accept=".pdf,.docx,.md,.txt,application/pdf">
@@ -25,6 +26,7 @@
 <section class="card">
   <h2>Oder Text einfügen</h2>
   <form hx-post="/upload/cv" hx-target="#upload-result" hx-swap="innerHTML">
+    {% include "partials/csrf.html" %}
     <label for="paste_text">Lebenslauf-Text</label>
     <textarea id="paste_text" name="paste_text" rows="12" placeholder="Lebenslauf hier einfügen…"></textarea>
     <button type="submit" class="btn">Text übernehmen</button>

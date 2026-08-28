@@ -54,3 +54,16 @@ def init_db() -> None:
     from app.models import orm  # noqa: F401
 
     Base.metadata.create_all(bind=engine)
+    _ensure_sqlite_columns()
+
+
+def _ensure_sqlite_columns() -> None:
+    if not str(engine.url).startswith("sqlite"):
+        return
+    with engine.begin() as conn:
+        info = conn.exec_driver_sql("PRAGMA table_info(generated_documents)").fetchall()
+        cols = {row[1] for row in info}
+        if cols and "application_id" not in cols:
+            conn.exec_driver_sql(
+                "ALTER TABLE generated_documents ADD COLUMN application_id VARCHAR(36)"
+            )

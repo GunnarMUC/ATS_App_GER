@@ -10,6 +10,7 @@
 {% endif %}
 <section class="card">
   <form method="post" action="/jobs" enctype="multipart/form-data" class="form">
+    {% include "partials/csrf.html" %}
     <label for="text">Stellenanzeige</label>
     <textarea id="text" name="text" rows="14" placeholder="Stellenanzeige hier einfügen…"></textarea>
     <label for="file">Oder Datei</label>

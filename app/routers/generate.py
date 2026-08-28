@@ -15,6 +15,7 @@ from app.config import get_settings
 from app.database import get_db
 from app.models.orm import AdaptationPlan, FactLock, GeneratedDocument, JobDescription
 from app.services import llm_client
+from app.services.applications import link_document
 from app.services.cover_generator import generate_cover
 from app.services.cv_generator import generate_cv
 from app.services.docx_builder import build_docx
@@ -122,6 +123,8 @@ async def _generate_cv_doc(
     db.add(row)
     db.commit()
     db.refresh(row)
+    link_document(db, job.id, row)
+    db.refresh(row)
     return row
 
 
@@ -165,6 +168,8 @@ async def _generate_cover_doc(
     )
     db.add(row)
     db.commit()
+    db.refresh(row)
+    link_document(db, job.id, row)
     db.refresh(row)
     return row
 
@@ -244,6 +249,65 @@ async def review_page(job_id: str, request: Request, db: Session = Depends(get_d
     lock = db.get(FactLock, plan.fact_lock_id)
     ctx = await _review_context(db, job, plan, lock)
     return templates.TemplateResponse(request, "review.html", ctx)
+
+
+@router.get("/cv/compare/{job_id}", response_class=HTMLResponse)
+async def compare_page(job_id: str, request: Request, db: Session = Depends(get_db)):
+    job = db.get(JobDescription, job_id)
+    if job is None:
+        raise HTTPException(status_code=404, detail="Stelle nicht gefunden.")
+    plan = (
+        db.query(AdaptationPlan)
+        .filter(AdaptationPlan.job_id == job_id)
+        .order_by(AdaptationPlan.id.desc())
+        .first()
+    )
+    if plan is None:
+        raise HTTPException(status_code=404, detail="Kein Plan.")
+    lock = db.get(FactLock, plan.fact_lock_id)
+    if lock is None:
+        raise HTTPException(status_code=404, detail="Kein FactLock.")
+    ensure_settings_row(db)
+    health = await llm_client.check_health(db)
+    facts = lock.facts_json or {}
+    plan_json = plan.plan_json or {}
+    exp_map = {e["id"]: e for e in (facts.get("experience") or [])}
+    skill_map = {s["id"]: s for s in (facts.get("skills") or [])}
+    master_order = [e["id"] for e in (facts.get("experience") or [])]
+    plan_order = list(plan_json.get("experience_order") or [])
+    hidden = list(plan_json.get("hidden_experience_ids") or [])
+    master_pos = {eid: i for i, eid in enumerate(master_order)}
+    moved = [eid for i, eid in enumerate(plan_order) if master_pos.get(eid, i) != i]
+    latest_cv = (
+        db.query(GeneratedDocument)
+        .filter(GeneratedDocument.job_id == job_id, GeneratedDocument.type == "cv")
+        .order_by(GeneratedDocument.version.desc())
+        .first()
+    )
+    guard_ok = bool(latest_cv and latest_cv.fact_guard_passed)
+    guard_errors = []
+    if latest_cv and latest_cv.structured_json:
+        guard_errors = list((latest_cv.structured_json or {}).get("guard_errors") or [])
+    return templates.TemplateResponse(
+        request,
+        "compare.html",
+        {
+            "health": health,
+            "job": job,
+            "plan": plan,
+            "plan_json": plan_json,
+            "facts": facts,
+            "exp_map": exp_map,
+            "skill_map": skill_map,
+            "master_order": master_order,
+            "plan_order": plan_order,
+            "hidden": hidden,
+            "moved": set(moved),
+            "latest_cv": latest_cv,
+            "guard_ok": guard_ok,
+            "guard_errors": guard_errors,
+        },
+    )
 
 
 @router.get("/documents/{doc_id}/download")

@@ -9,12 +9,15 @@
 <section class="card">
   <h2>Generieren</h2>
   <form method="post" action="/jobs/{{ job.id }}/generate?type=both" class="btn-row">
+    {% include "partials/csrf.html" %}
     <button class="btn primary" type="submit">CV + Anschreiben erzeugen</button>
   </form>
   <form method="post" action="/jobs/{{ job.id }}/generate?type=cv" style="display:inline">
+    {% include "partials/csrf.html" %}
     <button class="btn" type="submit">Nur CV</button>
   </form>
   <form method="post" action="/jobs/{{ job.id }}/generate?type=cover" style="display:inline">
+    {% include "partials/csrf.html" %}
     <button class="btn" type="submit">Nur Anschreiben</button>
   </form>
 </section>
@@ -55,9 +58,14 @@
 </section>
 {% endif %}
 
-{% if latest_cv and latest_cv.fact_guard_passed %}
+{% if latest_cv %}
 <section class="card">
-  <a class="btn primary" href="/jobs/{{ job.id }}/zip">ZIP herunterladen</a>
+  <div class="btn-row">
+    <a class="btn" href="/cv/compare/{{ job.id }}">Master vs. Rolle vergleichen</a>
+    {% if latest_cv.fact_guard_passed %}
+    <a class="btn primary" href="/jobs/{{ job.id }}/zip">ZIP herunterladen</a>
+    {% endif %}
+  </div>
 </section>
 {% endif %}
 

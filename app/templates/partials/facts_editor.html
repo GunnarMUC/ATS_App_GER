@@ -4,6 +4,7 @@
   <p class="meta">Noch kein Draft. Strukturieren oder Fixture laden.</p>
   {% else %}
   <form method="post" action="/cv/{{ cv.id }}/facts" class="form">
+    {% include "partials/csrf.html" %}
     <label for="facts_json">CV-JSON</label>
     <textarea id="facts_json" name="facts_json" rows="24" spellcheck="false">{% if facts_json %}{{ facts_json }}{% elif facts %}{{ facts | tojson }}{% endif %}</textarea>
     <div class="btn-row">
@@ -12,6 +13,7 @@
   </form>
   <form method="post" action="/cv/{{ cv.id }}/lock" class="form" style="margin-top:.75rem"
         onsubmit="return confirm('Fakten jetzt sperren? Ein erneuter Lock archiviert den vorherigen.');">
+    {% include "partials/csrf.html" %}
     <p class="meta">Sperrt den zuletzt gespeicherten Entwurf (oder den JSON-Stand nach „Entwurf speichern“).</p>
     <button type="submit" class="btn primary">Fakten sperren</button>
   </form>

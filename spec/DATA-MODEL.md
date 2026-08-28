@@ -90,6 +90,7 @@ Bestätigbarer Plan. Generierung referenziert **diese** ID, nicht „was das LLM
 | id | UUID PK | |
 | type | str | cv \| cover |
 | job_id | FK | |
+| application_id | FK nullable | Bewerbung, gesetzt bei Generate |
 | fact_lock_id | FK | Hash muss noch matchen |
 | plan_id | FK | |
 | version | int | |
@@ -99,6 +100,20 @@ Bestätigbarer Plan. Generierung referenziert **diese** ID, nicht „was das LLM
 | created_at | datetime | |
 
 Kein `Candidate`-User-Modell in v1. Ein lokaler Nutzer.
+
+### Application
+
+Bewerbungs-Pipeline (eine Zeile pro Stelle).
+
+| Spalte | Typ | Notes |
+|---|---|---|
+| id | UUID PK | |
+| job_id | FK unique | JobDescription |
+| stage | str | offen \| eingereicht \| interview \| absage \| angebot \| zusage |
+| notes | text | frei |
+| created_at / updated_at | datetime | |
+
+`GeneratedDocument.application_id` ist nullable FK auf Application. Wird beim Generieren gesetzt.
 
 ### AppSettings
 

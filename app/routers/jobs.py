@@ -18,6 +18,7 @@ from app.models.orm import (
     RoleProfile,
 )
 from app.services import llm_client
+from app.services.applications import get_or_create_application
 from app.services.document_parser import ParseError, parse_bytes, parse_plain_text
 from app.services.fact_lock import get_active_lock
 from app.services.job_analyzer import analyze_and_detect
@@ -88,6 +89,7 @@ async def create_job(
     det = RoleDetection(job_id=job.id, detection_json=detection)
     db.add(det)
     db.commit()
+    get_or_create_application(db, job.id)
 
     if request.headers.get("hx-request") or "text/html" in (request.headers.get("accept") or ""):
         return RedirectResponse(url=f"/jobs/{job.id}", status_code=303)

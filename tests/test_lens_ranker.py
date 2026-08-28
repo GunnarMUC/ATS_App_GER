@@ -30,3 +30,35 @@ def test_plan_orders_differ_ceo_vs_coo(fixtures_dir: Path):
     assert "kpi_revenue" in ceo["emphasis_kpi_ids"] or "sk_pl" in ceo["skill_order"][:4]
     assert "McKinsey" not in json.dumps(coo)
     assert coo["summary_brief"] != ceo["summary_brief"]
+
+
+def test_plan_orders_differ_cto_and_cfo(fixtures_dir: Path):
+    facts = json.loads((fixtures_dir / "master-cv.json").read_text(encoding="utf-8"))
+    cto_job = (fixtures_dir / "job-cto.txt").read_text(encoding="utf-8")
+    cfo_job = (fixtures_dir / "job-cfo.txt").read_text(encoding="utf-8")
+    cto_an = heuristic_job_analysis(cto_job, score_roles(cto_job))
+    cfo_an = heuristic_job_analysis(cfo_job, score_roles(cfo_job))
+    cto = build_plan_skeleton(facts, role_family="cto", job_analysis=cto_an)
+    cfo = build_plan_skeleton(facts, role_family="cfo", job_analysis=cfo_an)
+    ceo_job = (fixtures_dir / "job-ceo.txt").read_text(encoding="utf-8")
+    coo_job = (fixtures_dir / "job-coo.txt").read_text(encoding="utf-8")
+    ceo = build_plan_skeleton(
+        facts, role_family="ceo", job_analysis=heuristic_job_analysis(ceo_job, score_roles(ceo_job))
+    )
+    coo = build_plan_skeleton(
+        facts, role_family="coo", job_analysis=heuristic_job_analysis(coo_job, score_roles(coo_job))
+    )
+
+    assert cto["summary_brief"] != cfo["summary_brief"]
+    assert cto["summary_brief"] != ceo["summary_brief"]
+    assert cfo["summary_brief"] != coo["summary_brief"]
+    assert (
+        cto["skill_order"] != ceo["skill_order"]
+        or cto["emphasis_kpi_ids"] != ceo["emphasis_kpi_ids"]
+        or cto["experience_order"] != ceo["experience_order"]
+    )
+    assert (
+        cfo["skill_order"] != coo["skill_order"]
+        or cfo["emphasis_kpi_ids"] != coo["emphasis_kpi_ids"]
+        or cfo["experience_order"] != coo["experience_order"]
+    )

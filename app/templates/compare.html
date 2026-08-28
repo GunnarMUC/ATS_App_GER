@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}Vergleich · {{ job.title_raw }}{% endblock %}
+{% block content %}
+<header class="page-head">
+  <h1>Vorher / Nachher</h1>
+  <p class="lede">Master-Fakten gesperrt. Rechts nur Reihenfolge, Ausblendung und Betonung.</p>
+</header>
+
+<section class="card">
+  <h2>FactGuard
+    {% if latest_cv %}
+      {% if guard_ok %}<span class="pill sev-info">OK</span>
+      {% else %}<span class="pill sev-warn">Warnungen</span>{% endif %}
+    {% else %}
+      <span class="pill">kein CV</span>
+    {% endif %}
+  </h2>
+  {% if guard_errors %}
+  <ul class="issues">{% for e in guard_errors %}<li>{{ e }}</li>{% endfor %}</ul>
+  {% elif latest_cv and guard_ok %}
+  <p class="meta">Keine erfundenen Arbeitgeber, Titel, Daten oder KPIs.</p>
+  {% else %}
+  <p class="meta">Noch kein generiertes Dokument für diese Stelle.</p>
+  {% endif %}
+</section>
+
+<div class="compare">
+  <section class="card col">
+    <h2>Master (gesperrt)</h2>
+    <h3>Berufserfahrung</h3>
+    <ol class="list">
+      {% for eid in master_order %}
+      {% set exp = exp_map.get(eid) %}
+      {% if exp %}
+      <li>
+        <strong>{{ exp.title }}</strong>, {{ exp.employer }}
+        <span class="meta">{{ exp.start }}–{{ exp.end }}</span>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ol>
+    <h3>Skills</h3>
+    <p class="meta">{% for s in facts.skills or [] %}{{ s.name }}{% if not loop.last %}, {% endif %}{% endfor %}</p>
+  </section>
+  <section class="card col">
+    <h2>Rollensicht</h2>
+    <h3>Berufserfahrung</h3>
+    <ol class="list">
+      {% for eid in plan_order %}
+      {% set exp = exp_map.get(eid) %}
+      {% if exp %}
+      <li class="{% if eid in moved %}diff-moved{% endif %}">
+        <strong>{{ exp.title }}</strong>, {{ exp.employer }}
+        {% if eid in moved %}<span class="pill">Reihenfolge</span>{% endif %}
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ol>
+    {% if hidden %}
+    <h3>Ausgeblendet</h3>
+    <ul class="list">
+      {% for eid in hidden %}
+      {% set exp = exp_map.get(eid) %}
+      {% if exp %}
+      <li class="diff-hidden">{{ exp.title }}, {{ exp.employer }}</li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <h3>Betonte Skills</h3>
+    <p>
+      {% for sid in (plan_json.skill_order or [])[:10] %}
+      {% set sk = skill_map.get(sid) %}
+      {% if sk %}<span class="pill diff-skill">{{ sk.name }}</span>{% endif %}
+      {% endfor %}
+    </p>
+    {% if plan_json.summary_brief %}
+    <h3>Summary-Richtung</h3>
+    <p>{{ plan_json.summary_brief }}</p>
+    {% endif %}
+  </section>
+</div>
+
+<p class="btn-row">
+  <a class="btn" href="/jobs/{{ job.id }}/review">Review</a>
+  <a class="btn" href="/jobs/{{ job.id }}/plan">Plan</a>
+</p>
+{% endblock %}

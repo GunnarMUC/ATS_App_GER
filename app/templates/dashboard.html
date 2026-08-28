@@ -30,6 +30,69 @@
 </section>
 {% endif %}
 
+<section class="card">
+  <h2>Bewerbungen</h2>
+  {% if not applications %}
+  <p class="meta">Noch keine Bewerbung. Legen Sie eine Stelle an.</p>
+  {% else %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Stelle</th>
+        <th>Rolle</th>
+        <th>Status</th>
+        <th>Dokument</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in applications %}
+      <tr>
+        <td>
+          {% if row.job %}
+          <a href="/jobs/{{ row.job.id }}">{{ row.job.title_raw }}</a>
+          {% else %}
+          <span class="meta">Stelle gelöscht</span>
+          {% endif %}
+        </td>
+        <td>{{ row.role_label }}</td>
+        <td>
+          <span class="pill stage-{{ row.app.stage }}">{{ stage_labels.get(row.app.stage, row.app.stage) }}</span>
+          <form method="post" action="/applications/{{ row.app.id }}/stage" class="inline-form">
+            {% include "partials/csrf.html" %}
+            <select name="stage" onchange="this.form.submit()">
+              {% for s in stages %}
+              <option value="{{ s }}" {% if s == row.app.stage %}selected{% endif %}>{{ stage_labels.get(s, s) }}</option>
+              {% endfor %}
+            </select>
+          </form>
+        </td>
+        <td>
+          {% if row.latest_cv %}
+          <span class="meta">CV v{{ row.latest_cv.version }}
+            {% if row.latest_cv.fact_guard_passed %}· Guard OK{% else %}· Guard Fail{% endif %}
+          </span>
+          {% if row.job %}
+          <a href="/cv/compare/{{ row.job.id }}">Vergleich</a>
+          {% endif %}
+          {% else %}
+          <span class="meta">—</span>
+          {% endif %}
+        </td>
+        <td>
+          <form method="post" action="/applications/{{ row.app.id }}/delete" class="inline-form"
+                onsubmit="return confirm('Bewerbung aus der Übersicht entfernen?');">
+            {% include "partials/csrf.html" %}
+            <button type="submit" class="btn">Löschen</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</section>
+
 <section class="card muted">
   <h2>Status</h2>
   <dl class="kv">

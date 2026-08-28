@@ -16,6 +16,7 @@
 <section class="card">
   <h2>Ollama</h2>
   <form method="post" action="/settings" class="form">
+    {% include "partials/csrf.html" %}
     <label for="ollama_host">Host</label>
     <input id="ollama_host" name="ollama_host" type="url" required
            value="{{ settings_row.ollama_host }}"
@@ -64,10 +65,30 @@
 </section>
 
 <section class="card">
+  <h2>Daten</h2>
+  <p class="meta">Backup enthält die lokale Datenbank sowie Uploads und Generierungen. Optional mit Passwort (AES).</p>
+  <form method="post" action="/settings/backup" class="form">
+    {% include "partials/csrf.html" %}
+    <label for="backup_password">Passwort (optional)</label>
+    <input id="backup_password" name="password" type="text" autocomplete="off">
+    <button type="submit" class="btn primary">Backup-ZIP herunterladen</button>
+  </form>
+  <form method="post" action="/settings/restore" class="form" enctype="multipart/form-data">
+    {% include "partials/csrf.html" %}
+    <label for="restore_file">Restore aus ZIP</label>
+    <input id="restore_file" type="file" name="file" accept=".zip,application/zip">
+    <label for="restore_password">Passwort (falls gesetzt)</label>
+    <input id="restore_password" name="password" type="text" autocomplete="off">
+    <button type="submit" class="btn">Wiederherstellen</button>
+  </form>
+</section>
+
+<section class="card">
   <h2>Alle Bewerberdaten löschen</h2>
   <p class="meta">Unwiderruflich: DB-Einträge, Uploads, Generierungen. Settings bleiben.</p>
   <form method="post" action="/settings/wipe" class="form"
         onsubmit="return confirm('Wirklich ALLE Bewerberdaten löschen?');">
+    {% include "partials/csrf.html" %}
     <label for="confirm">Bestätigung: LOESCHEN</label>
     <input id="confirm" name="confirm" type="text" autocomplete="off">
     <button type="submit" class="btn">Endgültig löschen</button>

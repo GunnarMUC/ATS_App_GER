@@ -33,6 +33,13 @@ Testdaten: `spec/fixtures/master-cv.json`.
 | `test_two_jobs_not_same_family` | families unterschiedlich |
 | `test_plan_orders_differ_ceo_vs_coo` | Ranker: Skill-Order oder Emphasis oder Hidden-Set unterscheiden sich; P&L-Bullets vs OTIF-Bullets. Kein LLM nötig |
 | `test_health_without_ollama` | App startet, `ollama=down`, kein Crash, kein festes Qwen-Tag verlangt |
+| `test_new_role_fixtures_detect_family` | Jede neue Fixture (CFO, CSO, CTO, Head of Ops, PM, Berater, CHRO, Product, Eng-Lead) → erwartete `role_family` ohne LLM |
+| `test_plan_orders_differ_cto_and_cfo` | Ranker: CTO- und CFO-Skelett unterscheiden sich von CEO/COO |
+| `test_application_created_and_stage_on_dashboard` | Stelle → Application auf `/`, Stage-Wechsel sichtbar |
+| `test_compare_page_shows_master_and_plan` | `/cv/compare/{job_id}` zeigt Master, Rollensicht, FactGuard |
+| `test_backup_zip_roundtrip` | ZIP enthält DB+Dateien, Restore in leeres Verzeichnis |
+| `test_post_without_csrf_403` | POST ohne Token → 403 |
+| `test_non_loopback_start_blocked` | `APP_HOST=0.0.0.0` ohne Flag → RuntimeError |
 
 Bei gemocktem Planner: feste Mock-Pläne in `tests/fixtures/plan-ceo.json` und `plan-coo.json`. Beim echten LLM: soft assert + Snapshot review, skip wenn Health down.
 

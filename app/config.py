@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     ollama_model_strong: str = "qwen2.5:14b"
     ollama_model_fast: str = "qwen2.5:7b"
     ollama_allow_nonlocal: bool = False
+    app_allow_nonlocal: bool = False
     data_dir: Path = Path("./data")
     max_upload_mb: int = 8
     llm_timeout_s: int = 180

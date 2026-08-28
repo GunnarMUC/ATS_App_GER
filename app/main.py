@@ -12,6 +12,7 @@ from fastapi.templating import Jinja2Templates
 from app.config import get_settings
 from app.database import init_db
 from app.routers import (
+    applications,
     documents,
     generate,
     health,
@@ -22,6 +23,8 @@ from app.routers import (
     settings,
     upload,
 )
+from app.security.bind import assert_bind_is_loopback
+from app.security.csrf import CSRFMiddleware
 
 logging.basicConfig(
     level=logging.INFO,
@@ -34,11 +37,7 @@ logger = logging.getLogger("ats_app")
 async def lifespan(_app: FastAPI):
     settings = get_settings()
     settings.ensure_dirs()
-    if settings.app_host not in {"127.0.0.1", "localhost", "::1"}:
-        logger.warning(
-            "APP_HOST=%s is not loopback — Bewerberdaten können im Netz erreichbar sein.",
-            settings.app_host,
-        )
+    assert_bind_is_loopback()
     init_db()
     logger.info("app ready host=%s port=%s", settings.app_host, settings.app_port)
     yield
@@ -51,6 +50,7 @@ app = FastAPI(
     docs_url="/docs" if get_settings().debug else None,
     redoc_url=None,
 )
+app.add_middleware(CSRFMiddleware)
 
 static_dir = Path("app/static")
 static_dir.mkdir(parents=True, exist_ok=True)
@@ -63,6 +63,7 @@ app.include_router(settings.router)
 app.include_router(reference_cv.router)
 app.include_router(documents.router)
 app.include_router(jobs.router)
+app.include_router(applications.router)
 app.include_router(generate.router)
 app.include_router(progress.router)
 

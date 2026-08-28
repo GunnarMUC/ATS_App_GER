@@ -1,5 +1,5 @@
 {
-  "comment": "Terme nach aliases_de-Normalisierung (lowercase, ß→ss, Bindestriche/Spaces weg). Ranker boostet Hits in Experience-Titel/Bullets/Skills. Keine FactLock-IDs — gilt für jeden Master.",
+  "comment": "Terme nach aliases_de-Normalisierung (lowercase, ß→ss, Bindestriche/Spaces weg). Ranker boostet Hits in Experience-Titel/Bullets/Skills. Keine FactLock-IDs — gilt für jeden Master. title_terms: Boost auf der ersten Zeile. kpi_terms: Extra-Emphasis auf KPI-Labels.",
   "margin_for_top1": 0.15,
   "role_family_weights": {
     "ceo": {
@@ -19,6 +19,13 @@
         "gesamtverantwortung",
         "fuehrungskraefte"
       ],
+      "title_terms": [
+        "ceo",
+        "geschaeftsfuehrer",
+        "managingdirector",
+        "vorstandsvorsitz"
+      ],
+      "kpi_terms": ["umsatz", "mio", "fte", "report", "ergebnis"],
       "downweight_terms": [
         "otif",
         "shopfloor",
@@ -44,6 +51,12 @@
         "transformation",
         "standorte"
       ],
+      "title_terms": [
+        "coo",
+        "chiefoperatingofficer",
+        "geschaeftsleitungoperations"
+      ],
+      "kpi_terms": ["otif", "cost", "standort", "cts"],
       "downweight_terms": [
         "beirat",
         "gesellschafter",
@@ -54,25 +67,123 @@
     "cfo": {
       "terms": [
         "cfo",
+        "finanzvorstand",
+        "kaufmaennischegeschaeftsfuehrung",
         "finanz",
         "controlling",
         "workingcapital",
         "bilanz",
         "ifrs",
-        "treasury"
+        "treasury",
+        "cashflow",
+        "liquiditaet",
+        "planungundsteuerung",
+        "abschluss"
       ],
-      "downweight_terms": []
+      "title_terms": [
+        "cfo",
+        "finanzvorstand",
+        "kaufmaennischegeschaeftsfuehrung",
+        "leiterfinanzen"
+      ],
+      "kpi_terms": ["ebit", "workingcapital", "cash", "ifrs"],
+      "downweight_terms": ["shopfloor", "otif", "engineering"]
     },
     "cso_sales": {
       "terms": [
         "cso",
+        "vertriebsleiter",
+        "vertriebsleitung",
+        "chiefsalesofficer",
         "vertrieb",
         "pipeline",
         "keyaccount",
         "sales",
-        "umsatzverantwortung"
+        "umsatzverantwortung",
+        "neugeschaeft",
+        "kundenentwicklung",
+        "quote"
       ],
-      "downweight_terms": []
+      "title_terms": [
+        "cso",
+        "vertriebsleiter",
+        "vertriebsleitung",
+        "chiefsalesofficer",
+        "headofsales"
+      ],
+      "kpi_terms": ["pipeline", "umsatz", "quote", "account"],
+      "downweight_terms": ["shopfloor", "ifrs", "engineering"]
+    },
+    "cto": {
+      "terms": [
+        "cto",
+        "chieftechnologyofficer",
+        "technischergeschaeftsfuehrer",
+        "technologie",
+        "architektur",
+        "engineeringorganisation",
+        "plattform",
+        "softwareentwicklung",
+        "itstrategie",
+        "techstack",
+        "scalability"
+      ],
+      "title_terms": [
+        "cto",
+        "chieftechnologyofficer",
+        "technischergeschaeftsfuehrer"
+      ],
+      "kpi_terms": ["uptime", "deploy", "engineering"],
+      "downweight_terms": ["otif", "shopfloor", "ifrs", "beirat"]
+    },
+    "chro": {
+      "terms": [
+        "chro",
+        "personalleitung",
+        "hrleitung",
+        "headofhr",
+        "chiefhumanresourcesofficer",
+        "personalentwicklung",
+        "tarif",
+        "betriebsrat",
+        "talent",
+        "peopleoperations",
+        "mitarbeitergewinnung"
+      ],
+      "title_terms": [
+        "chro",
+        "personalleitung",
+        "hrleitung",
+        "headofhr",
+        "personalleiter"
+      ],
+      "kpi_terms": ["fluktuation", "fte", "engagement"],
+      "downweight_terms": ["otif", "ifrs", "engineering", "pipeline"]
+    },
+    "head_ops": {
+      "terms": [
+        "headofoperations",
+        "vpoperations",
+        "leiteroperativeprozesse",
+        "tagesgeschaeft",
+        "standortleitung",
+        "operativeexzellenz",
+        "prozessfuehrung",
+        "sla",
+        "durchsatz"
+      ],
+      "title_terms": [
+        "headofoperations",
+        "vpoperations",
+        "leiteroperativeprozesse"
+      ],
+      "kpi_terms": ["sla", "durchsatz", "standort"],
+      "downweight_terms": [
+        "beirat",
+        "gesellschafter",
+        "gesamtverantwortung",
+        "cto"
+      ]
     },
     "head_logistics": {
       "terms": [
@@ -85,6 +196,13 @@
         "otif",
         "3pl"
       ],
+      "title_terms": [
+        "logistikleiter",
+        "leiterlogistik",
+        "headoflogistics",
+        "vpsupplychain"
+      ],
+      "kpi_terms": ["otif", "transit", "lager"],
       "downweight_terms": [
         "beirat",
         "gesamtverantwortung"
@@ -97,9 +215,17 @@
         "oee",
         "produktion",
         "safety",
-        "schicht"
+        "schicht",
+        "fertigungsleitung"
       ],
-      "downweight_terms": []
+      "title_terms": [
+        "werkleiter",
+        "plantmanager",
+        "fertigungsleiter",
+        "operationsmanager"
+      ],
+      "kpi_terms": ["oee", "safety", "ausbringung"],
+      "downweight_terms": ["beirat", "pipeline"]
     },
     "program": {
       "terms": [
@@ -108,9 +234,103 @@
         "governance",
         "change",
         "multiprojekt",
-        "pmo"
+        "pmo",
+        "transformationsleitung"
       ],
-      "downweight_terms": []
+      "title_terms": [
+        "programdirector",
+        "transformationsleitung",
+        "programmdirektor",
+        "headofpmo"
+      ],
+      "kpi_terms": ["meilenstein", "benefit", "governance"],
+      "downweight_terms": ["shopfloor", "schicht"]
+    },
+    "project": {
+      "terms": [
+        "projektmanager",
+        "projektleiter",
+        "projectmanager",
+        "gantt",
+        "meilenstein",
+        "projektplan",
+        "stakeholdermanagement",
+        "scope"
+      ],
+      "title_terms": [
+        "projektmanager",
+        "projektleiter",
+        "projectmanager"
+      ],
+      "kpi_terms": ["budget", "meilenstein", "go-live"],
+      "downweight_terms": [
+        "gesamtverantwortung",
+        "beirat",
+        "engineeringorganisation"
+      ]
+    },
+    "consultant": {
+      "terms": [
+        "berater",
+        "consultant",
+        "unternehmensberater",
+        "beratung",
+        "mandanten",
+        "workstream",
+        "empfehlung",
+        "analyse"
+      ],
+      "title_terms": [
+        "berater",
+        "consultant",
+        "unternehmensberater",
+        "seniorconsultant"
+      ],
+      "kpi_terms": ["mandanten", "workstream"],
+      "downweight_terms": ["schicht", "shopfloor", "directreports"]
+    },
+    "product": {
+      "terms": [
+        "produktmanager",
+        "productmanager",
+        "headofproduct",
+        "productowner",
+        "roadmap",
+        "backlog",
+        "nutzerforschung",
+        "go-to-market",
+        "discovery"
+      ],
+      "title_terms": [
+        "produktmanager",
+        "productmanager",
+        "headofproduct",
+        "productowner"
+      ],
+      "kpi_terms": ["roadmap", "adoption", "nps"],
+      "downweight_terms": ["otif", "ifrs", "shopfloor"]
+    },
+    "eng_lead": {
+      "terms": [
+        "engineeringlead",
+        "headofengineering",
+        "teamleadengineering",
+        "dataengineering",
+        "techlead",
+        "staffengineer",
+        "datenplattform",
+        "code",
+        "squad"
+      ],
+      "title_terms": [
+        "engineeringlead",
+        "headofengineering",
+        "teamleadengineering",
+        "dataengineeringlead",
+        "techlead"
+      ],
+      "kpi_terms": ["deploy", "latency", "pipeline"],
+      "downweight_terms": ["beirat", "otif", "ifrs"]
     },
     "functional_expert": {
       "terms": [
@@ -119,6 +339,12 @@
         "fachlich",
         "referent"
       ],
+      "title_terms": [
+        "spezialist",
+        "referent",
+        "fachlichexperte"
+      ],
+      "kpi_terms": [],
       "downweight_terms": [
         "geschaeftsfuehrer",
         "coo"
@@ -126,6 +352,8 @@
     },
     "other": {
       "terms": [],
+      "title_terms": [],
+      "kpi_terms": [],
       "downweight_terms": []
     }
   }

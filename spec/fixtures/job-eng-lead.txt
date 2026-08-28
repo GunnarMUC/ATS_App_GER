@@ -1,0 +1,13 @@
+Engineering Lead / Head of Engineering (m/w/d) — Datenplattform
+
+Wir suchen einen Engineering Lead (Data Engineering Lead) für Plattform und Squads.
+
+Ihre Aufgaben:
+- Tech-Lead für Datenplattform, Code-Qualität, Deploy-Frequenz
+- Head of Engineering für zwei Squads, Latency und Daten-Pipelines
+- Staff-nahe Arbeit, kein C-Level-Mandat, kein Beirat, keine OTIF-Kennzahlen
+
+Ihr Profil:
+- Erfahrung als Engineering Lead oder Head of Engineering
+- Data-Engineering-Praxis, klare technische Führung
+- Sie-Form

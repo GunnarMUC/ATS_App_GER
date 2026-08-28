@@ -105,6 +105,21 @@ class AdaptationPlan(Base):
     confirmed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
 
+class Application(Base):
+    __tablename__ = "applications"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
+    job_id: Mapped[str] = mapped_column(
+        String(36), ForeignKey("job_descriptions.id"), nullable=False, unique=True
+    )
+    stage: Mapped[str] = mapped_column(String(32), nullable=False, default="offen")
+    notes: Mapped[str] = mapped_column(Text, nullable=False, default="")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=_utcnow, onupdate=_utcnow
+    )
+
+
 class GeneratedDocument(Base):
     __tablename__ = "generated_documents"
 
@@ -112,6 +127,9 @@ class GeneratedDocument(Base):
     type: Mapped[str] = mapped_column(String(16), nullable=False)
     job_id: Mapped[str] = mapped_column(
         String(36), ForeignKey("job_descriptions.id"), nullable=False
+    )
+    application_id: Mapped[str | None] = mapped_column(
+        String(36), ForeignKey("applications.id"), nullable=True
     )
     fact_lock_id: Mapped[str] = mapped_column(
         String(36), ForeignKey("fact_locks.id"), nullable=False

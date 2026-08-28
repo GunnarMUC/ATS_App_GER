@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, Form, Request
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile
+from fastapi.responses import HTMLResponse, JSONResponse, Response
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 from app.config import get_settings
 from app.database import get_db
 from app.services import llm_client
+from app.services.backup import make_backup_zip, restore_backup
 from app.services.llm_client import LLMError
 from app.services.settings_service import ensure_settings_row, update_settings
 
@@ -71,6 +72,57 @@ async def settings_put(body: SettingsUpdate, db: Session = Depends(get_db)):
     }
 
 
+@router.get("/settings/backup")
+async def download_backup(password: str | None = None):
+    settings = get_settings()
+    blob = make_backup_zip(settings.data_dir, password or None)
+    return Response(
+        content=blob,
+        media_type="application/zip",
+        headers={"Content-Disposition": 'attachment; filename="ats_app_backup.zip"'},
+    )
+
+
+@router.post("/settings/backup")
+async def download_backup_form(password: str = Form("")):
+    settings = get_settings()
+    blob = make_backup_zip(settings.data_dir, password or None)
+    return Response(
+        content=blob,
+        media_type="application/zip",
+        headers={"Content-Disposition": 'attachment; filename="ats_app_backup.zip"'},
+    )
+
+
+@router.post("/settings/restore")
+async def restore_backup_route(
+    request: Request,
+    db: Session = Depends(get_db),
+    file: UploadFile = File(...),
+    password: str = Form(""),
+):
+    data = await file.read()
+    settings = get_settings()
+    try:
+        restore_backup(settings.data_dir, data, password or None)
+    except Exception as exc:
+        raise HTTPException(status_code=422, detail=f"Restore fehlgeschlagen: {exc}") from exc
+    ensure_settings_row(db)
+    health = await llm_client.check_health(db)
+    return templates.TemplateResponse(
+        request,
+        "settings.html",
+        {
+            "settings_row": ensure_settings_row(db),
+            "health": health,
+            "models": health.get("models_installed") or [],
+            "env_defaults": get_settings(),
+            "saved": True,
+            "error": None,
+        },
+    )
+
+
 @router.post("/settings/wipe")
 async def wipe_data(request: Request, db: Session = Depends(get_db), confirm: str = Form("")):
     if confirm != "LOESCHEN":
@@ -97,6 +149,7 @@ async def wipe_data(request: Request, db: Session = Depends(get_db), confirm: st
         models.GeneratedDocument,
         models.AdaptationPlan,
         models.RoleDetection,
+        models.Application,
         models.JobDescription,
         models.FactLock,
         models.RoleProfile,

@@ -28,6 +28,7 @@
   <h2>Strukturieren</h2>
   <p class="meta">Lokales Modell (strong) liest den Rohtext und füllt das JSON. Danach hier korrigieren.</p>
   <form hx-post="/cv/{{ cv.id }}/structure" hx-target="#facts-panel" hx-swap="innerHTML">
+    {% include "partials/csrf.html" %}
     <button type="submit" class="btn">Mit Ollama strukturieren</button>
   </form>
 </section>

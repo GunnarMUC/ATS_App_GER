@@ -43,9 +43,16 @@ Stabil, klein, erweiterbar. IDs fest (englisch), Labels deutsch:
 | `coo` | COO, Geschäftsleitung Operations, Leiter Operations | Delivery, Prozesse, Supply Chain, KPIs, Transformation |
 | `cfo` | CFO, kfm. Geschäftsführung | Finanzen, Controlling, Working Capital |
 | `cso_sales` | CSO, Vertriebsleitung | Pipeline, Key Accounts, Wachstum |
+| `cto` | CTO, technischer Geschäftsführer | Technologie, Architektur, Engineering-Organisation |
+| `chro` | HR-Leitung, CHRO, Head of HR | Personal, Talent, Tarif, Organisation |
+| `head_ops` | Head of Operations, VP Operations | Tagesgeschäft, SLA, Standortprozesse (nicht C-Level) |
 | `head_logistics` | Leiter Logistik, Head of Logistics, VP Supply Chain | Netz, Lager, Transport, OTIF, Kosten |
 | `plant_ops` | Werkleiter, Plant Manager, Operations Manager | Produktion, OEE, Safety, Schicht |
 | `program` | Program Director, Transformationsleitung | Governance, Change, Multi-Projekt |
+| `project` | Projektmanager, Projektleiter | Scope, Meilensteine, Stakeholder |
+| `consultant` | Berater, Consultant | Analyse, Empfehlung, Mandanten |
+| `product` | Produktmanager, Head of Product | Roadmap, Discovery, Go-to-Market |
+| `eng_lead` | Engineering-Lead, Head of Engineering | Plattform, Squads, technische Führung |
 | `functional_expert` | Fachliche Expert:innenrolle | Tiefe, Tools, Methoden |
 | `other` | Fallback | Nutzer muss Familie wählen |
 

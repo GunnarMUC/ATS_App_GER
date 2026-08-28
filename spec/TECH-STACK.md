@@ -74,6 +74,7 @@ Client: eigenes `llm_client.py`, **kein** LangChain, **kein** LlamaIndex.
 ```
 APP_HOST=127.0.0.1
 APP_PORT=8000
+APP_ALLOW_NONLOCAL=false
 OLLAMA_HOST=http://127.0.0.1:11434
 OLLAMA_MODEL_STRONG=qwen2.5:14b
 OLLAMA_MODEL_FAST=qwen2.5:7b

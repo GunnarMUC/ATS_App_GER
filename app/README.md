@@ -1,4 +1,4 @@
-Anwendungscode. Vertrag: `../spec/MASTERPLAN.md`.
+Anwendungscode. Vertrag: `../spec/MASTERPLAN.md`. Nutzeranleitung: `../README.md`.
 
 Start:
 
