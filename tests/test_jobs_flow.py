@@ -34,6 +34,7 @@ def test_job_flow_coo_to_zip(client, fixtures_dir: Path):
         # simpler: create via internal helper path
         # use jobs list: scrape job id from HTML
         import re
+
         m = re.search(r"/jobs/([0-9a-f\-]{36})", r.text)
         assert m, r.text[:500]
         job_id = m.group(1)
@@ -44,6 +45,7 @@ def test_job_flow_coo_to_zip(client, fixtures_dir: Path):
 
     # get plan id from page
     import re
+
     m = re.search(r"/jobs/" + job_id + r"/plan/([0-9a-f\-]{36})/confirm", r.text)
     assert m
     plan_id = m.group(1)
@@ -74,6 +76,7 @@ def test_generate_without_confirm_409(client, fixtures_dir: Path):
     if r.status_code != 200:
         r = client.post("/jobs", data={"text": text}, follow_redirects=True)
         import re
+
         m = re.search(r"/jobs/([0-9a-f\-]{36})", r.url.path + r.text)
         assert m
         job_id = m.group(1)

@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import json
 import logging
-from typing import Any, Awaitable, Callable
+from collections.abc import Awaitable, Callable
+from typing import Any
 
 from app.services.lens_ranker import build_plan_skeleton
 from app.services.llm_client import LLMError, extract_json_text, generate
@@ -15,11 +16,7 @@ GenerateFn = Callable[..., Awaitable[str]]
 def validate_plan_ids(plan: dict[str, Any], facts: dict[str, Any]) -> dict[str, Any]:
     exp_ids = {e["id"] for e in facts.get("experience") or []}
     skill_ids = {s["id"] for s in facts.get("skills") or []}
-    bullet_ids = {
-        b["id"]
-        for e in facts.get("experience") or []
-        for b in e.get("bullets") or []
-    }
+    bullet_ids = {b["id"] for e in facts.get("experience") or [] for b in e.get("bullets") or []}
     kpi_ids = {k["id"] for k in facts.get("kpis") or []}
 
     order = [e for e in plan.get("experience_order") or [] if e in exp_ids]
@@ -36,9 +33,7 @@ def validate_plan_ids(plan: dict[str, Any], facts: dict[str, Any]) -> dict[str, 
     plan["emphasis_bullet_ids"] = [
         b for b in plan.get("emphasis_bullet_ids") or [] if b in bullet_ids
     ]
-    plan["emphasis_kpi_ids"] = [
-        k for k in plan.get("emphasis_kpi_ids") or [] if k in kpi_ids
-    ]
+    plan["emphasis_kpi_ids"] = [k for k in plan.get("emphasis_kpi_ids") or [] if k in kpi_ids]
     bindings = []
     for b in plan.get("keyword_bindings") or []:
         fid = b.get("fact_id")
@@ -77,16 +72,14 @@ async def build_adaptation_plan(
     generate_fn: GenerateFn | None = None,
     use_llm: bool = False,
 ) -> dict[str, Any]:
-    skeleton = build_plan_skeleton(
-        facts, role_family=role_family, job_analysis=job_analysis
-    )
+    skeleton = build_plan_skeleton(facts, role_family=role_family, job_analysis=job_analysis)
     if role_profile:
         # overlay default order if ids valid
         po = [e for e in role_profile.get("experience_order") or [] if e]
         if po:
-            skeleton["experience_order"] = [
-                e for e in po if e in skeleton["experience_order"]
-            ] + [e for e in skeleton["experience_order"] if e not in po]
+            skeleton["experience_order"] = [e for e in po if e in skeleton["experience_order"]] + [
+                e for e in skeleton["experience_order"] if e not in po
+            ]
 
     plan = validate_plan_ids(skeleton, facts)
     if not use_llm:
@@ -99,9 +92,7 @@ async def build_adaptation_plan(
         factlock_json=json.dumps(facts, ensure_ascii=False),
         job_analysis_json=json.dumps(job_analysis or {}, ensure_ascii=False),
         ranker_skeleton_json=json.dumps(plan, ensure_ascii=False),
-        role_profile_json=json.dumps(role_profile, ensure_ascii=False)
-        if role_profile
-        else None,
+        role_profile_json=json.dumps(role_profile, ensure_ascii=False) if role_profile else None,
     )
     try:
         raw = await gen(prompt, model_tier="strong", json_mode=True, temperature=0.3, db=db)

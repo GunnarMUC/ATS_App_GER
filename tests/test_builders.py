@@ -76,9 +76,7 @@ def test_download_endpoints(client, master_facts):
             assert b"Alex Morgenstern" in r.content
             assert b"alex.morgenstern@example.com" in r.content
         if fmt == "docx":
-            assert r.headers["content-type"].startswith(
-                "application/vnd.openxmlformats"
-            )
+            assert r.headers["content-type"].startswith("application/vnd.openxmlformats")
         if fmt == "pdf":
             assert r.content[:4] == b"%PDF"
 

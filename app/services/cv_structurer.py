@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import json
 import logging
-from typing import Any, Callable, Awaitable
+from collections.abc import Awaitable, Callable
+from typing import Any
 
 from app.models.schemas import CVStructure
 from app.services.llm_client import LLMError, extract_json_text, generate

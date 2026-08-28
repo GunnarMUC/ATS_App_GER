@@ -11,7 +11,17 @@ from fastapi.templating import Jinja2Templates
 
 from app.config import get_settings
 from app.database import init_db
-from app.routers import documents, generate, health, jobs, pages, progress, reference_cv, settings, upload
+from app.routers import (
+    documents,
+    generate,
+    health,
+    jobs,
+    pages,
+    progress,
+    reference_cv,
+    settings,
+    upload,
+)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -67,11 +77,7 @@ async def unhandled_exception(request: Request, exc: Exception):
         return templates.TemplateResponse(
             request,
             "partials/error.html",
-            {
-                "message": "Ein interner Fehler ist aufgetreten."
-                if not settings.debug
-                else str(exc)
-            },
+            {"message": "Ein interner Fehler ist aufgetreten." if not settings.debug else str(exc)},
             status_code=500,
         )
     return JSONResponse(

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from docx import Document
@@ -117,7 +117,7 @@ async def _generate_cv_doc(
         pdf_path=pdf_path,
         txt_path=txt_path,
         fact_guard_passed=guard.ok,
-        created_at=datetime.now(timezone.utc),
+        created_at=datetime.now(UTC),
     )
     db.add(row)
     db.commit()
@@ -161,7 +161,7 @@ async def _generate_cover_doc(
         pdf_path=pdf_path,
         txt_path=txt_path,
         fact_guard_passed=guard.ok,
-        created_at=datetime.now(timezone.utc),
+        created_at=datetime.now(UTC),
     )
     db.add(row)
     db.commit()
@@ -366,4 +366,8 @@ async def edit_document(doc_id: str, request: Request, db: Session = Depends(get
                 Path(doc.txt_path).write_text(build_txt(cv), encoding="utf-8")
     db.add(doc)
     db.commit()
-    return {"ok": True, "fact_guard_passed": doc.fact_guard_passed, "errors": (doc.structured_json or {}).get("guard_errors")}
+    return {
+        "ok": True,
+        "fact_guard_passed": doc.fact_guard_passed,
+        "errors": (doc.structured_json or {}).get("guard_errors"),
+    }

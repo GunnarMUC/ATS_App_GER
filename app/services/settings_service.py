@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from sqlalchemy.orm import Session
 
@@ -19,7 +19,7 @@ def ensure_settings_row(db: Session) -> AppSettings:
         ollama_host=s.ollama_host,
         model_fast=s.ollama_model_fast,
         model_strong=s.ollama_model_strong,
-        updated_at=datetime.now(timezone.utc),
+        updated_at=datetime.now(UTC),
     )
     db.add(row)
     db.commit()
@@ -49,7 +49,7 @@ def update_settings(
         row.model_fast = model_fast.strip()
     if model_strong is not None:
         row.model_strong = model_strong.strip()
-    row.updated_at = datetime.now(timezone.utc)
+    row.updated_at = datetime.now(UTC)
     db.add(row)
     db.commit()
     db.refresh(row)

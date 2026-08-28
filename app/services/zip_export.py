@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import zipfile
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from io import BytesIO
 from typing import Any
 
@@ -19,7 +19,7 @@ def build_application_zip(
     cover_txt: str | None = None,
     meta: dict[str, Any] | None = None,
 ) -> bytes:
-    day = datetime.now(timezone.utc).strftime("%Y%m%d")
+    day = datetime.now(UTC).strftime("%Y%m%d")
     safe_role = _safe(role or "Rolle")
     safe_co = _safe(company or "Firma")
     root = f"Bewerbung_{safe_role}_{safe_co}_{day}"

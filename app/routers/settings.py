@@ -88,9 +88,10 @@ async def wipe_data(request: Request, db: Session = Depends(get_db), confirm: st
             },
             status_code=400,
         )
+    import shutil
+
     from app.config import get_settings as gs
     from app.models import orm as models
-    import shutil
 
     for table in (
         models.GeneratedDocument,

@@ -126,7 +126,7 @@ def coverage_against_facts(
                     break
             if not fact_id:
                 for kpi in facts.get("kpis") or []:
-                    if find_in_text(kw, f"{kpi.get('label','')} {kpi.get('raw','')}"):
+                    if find_in_text(kw, f"{kpi.get('label', '')} {kpi.get('raw', '')}"):
                         fact_id = kpi["id"]
                         fact_kind = "kpi"
                         break

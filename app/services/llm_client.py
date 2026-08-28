@@ -4,6 +4,7 @@ import asyncio
 import logging
 import re
 from typing import Any, Literal
+
 import httpx
 from sqlalchemy.orm import Session
 
@@ -153,9 +154,7 @@ async def generate(
 
     if temperature is None:
         temperature = 0.1 if json_mode else 0.3
-    timeout = timeout_s or (
-        60 if model_tier == "fast" else settings.llm_timeout_s
-    )
+    timeout = timeout_s or (60 if model_tier == "fast" else settings.llm_timeout_s)
 
     system, user = _split_system_user(prompt)
     messages: list[dict[str, str]] = []
@@ -186,16 +185,16 @@ async def generate(
                     r.raise_for_status()
                     data = r.json()
                     content = (
-                        (data.get("message") or {}).get("content")
-                        or data.get("response")
-                        or ""
+                        (data.get("message") or {}).get("content") or data.get("response") or ""
                     )
                     if not content:
                         raise LLMError("Leere Modell-Antwort.", code="empty_response")
                     return content
             except (httpx.TransportError, httpx.TimeoutException) as exc:
                 last_err = exc
-                logger.warning("ollama transport attempt %s failed: %s", attempt + 1, type(exc).__name__)
+                logger.warning(
+                    "ollama transport attempt %s failed: %s", attempt + 1, type(exc).__name__
+                )
                 await asyncio.sleep(0.4 * (attempt + 1))
             except OllamaUnavailable:
                 raise

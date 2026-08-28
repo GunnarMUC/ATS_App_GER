@@ -3,7 +3,8 @@ from __future__ import annotations
 import copy
 import json
 import logging
-from typing import Any, Awaitable, Callable
+from collections.abc import Awaitable, Callable
+from typing import Any
 
 from app.services.cv_structurer import validate_cv_dict
 from app.services.llm_client import LLMError, extract_json_text, generate

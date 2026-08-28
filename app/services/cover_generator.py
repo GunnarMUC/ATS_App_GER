@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import json
 import logging
-from typing import Any, Awaitable, Callable
+from collections.abc import Awaitable, Callable
+from typing import Any
 
 from app.services.llm_client import LLMError, generate
 from app.services.prompt_loader import render_prompt
@@ -59,8 +60,7 @@ def build_cover_template(
             "",
             "Dear Sir or Madam," if form != "du" else "Hello,",
             "",
-            f"I am applying for the role of {title}"
-            + (f" at {company}." if company else "."),
+            f"I am applying for the role of {title}" + (f" at {company}." if company else "."),
             "",
             f"{brief}",
             "",

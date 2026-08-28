@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from datetime import UTC
+
 from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
@@ -69,9 +71,7 @@ async def create_job(
     except ParseError as exc:
         raise HTTPException(status_code=422, detail=exc.message) from exc
 
-    analysis, detection = await analyze_and_detect(
-        raw, db=db, use_llm=bool(use_llm)
-    )
+    analysis, detection = await analyze_and_detect(raw, db=db, use_llm=bool(use_llm))
     title = analysis.get("title") or (raw.splitlines() or ["Stelle"])[0][:200]
     job = JobDescription(
         title_raw=title,
@@ -89,9 +89,7 @@ async def create_job(
     db.add(det)
     db.commit()
 
-    if request.headers.get("hx-request") or "text/html" in (
-        request.headers.get("accept") or ""
-    ):
+    if request.headers.get("hx-request") or "text/html" in (request.headers.get("accept") or ""):
         return RedirectResponse(url=f"/jobs/{job.id}", status_code=303)
     return {"ok": True, "job_id": job.id, "analysis": analysis, "detection": detection}
 
@@ -168,7 +166,9 @@ async def plan_page(
         raise HTTPException(status_code=404, detail="Stelle nicht gefunden.")
     lock = get_active_lock(db)
     if lock is None:
-        raise HTTPException(status_code=422, detail="Kein aktiver FactLock. Zuerst Master-CV sperren.")
+        raise HTTPException(
+            status_code=422, detail="Kein aktiver FactLock. Zuerst Master-CV sperren."
+        )
     ensure_settings_row(db)
     health = await llm_client.check_health(db)
 
@@ -300,7 +300,7 @@ async def confirm_plan(job_id: str, plan_id: str, request: Request, db: Session 
         data = validate_plan_ids(data, lock.facts_json)
         plan.plan_json = data
 
-    from datetime import datetime, timezone
+    from datetime import datetime
 
     # supersede other confirmed for same job
     for other in (
@@ -313,7 +313,7 @@ async def confirm_plan(job_id: str, plan_id: str, request: Request, db: Session 
             db.add(other)
 
     plan.status = "confirmed"
-    plan.confirmed_at = datetime.now(timezone.utc)
+    plan.confirmed_at = datetime.now(UTC)
     db.add(plan)
     db.commit()
     return RedirectResponse(url=f"/jobs/{job_id}/review", status_code=303)

@@ -49,7 +49,9 @@ def detect_form_of_address(text: str) -> str:
 def detect_language(text: str) -> str:
     t = text or ""
     de_markers = len(re.findall(r"\b(und|für|mit|Sie|Geschäfts|Erfahrung|Bewerbung)\b", t))
-    en_markers = len(re.findall(r"\b(the|and|with|you|experience|role|responsibilities)\b", t, re.I))
+    en_markers = len(
+        re.findall(r"\b(the|and|with|you|experience|role|responsibilities)\b", t, re.I)
+    )
     return "de" if de_markers >= en_markers else "en"
 
 
@@ -90,9 +92,7 @@ def score_roles(job_text: str) -> dict[str, Any]:
         scores["ceo"] += 4.0
     if "coo" in fl or "chiefoperatingofficer" in fl:
         scores["coo"] += 4.0
-    if "geschaeftsleitungoperations" in fl or (
-        "geschaeftsleitung" in fl and "operation" in fl
-    ):
+    if "geschaeftsleitungoperations" in fl or ("geschaeftsleitung" in fl and "operation" in fl):
         scores["coo"] += 3.5
         scores["ceo"] -= 0.5
     if "leiterlogistik" in fl or "headoflogistics" in fl or "logistikleiter" in fl:
@@ -105,7 +105,6 @@ def score_roles(job_text: str) -> dict[str, Any]:
     if "wir suchen keine operative" in raw.lower() or "nicht eine rein funktionale" in raw.lower():
         scores["ceo"] += 2.5
         scores["coo"] -= 1.0
-
 
     ranked = sorted(scores.items(), key=lambda x: x[1], reverse=True)
     top_name, top_score = ranked[0]
@@ -171,7 +170,9 @@ def score_roles(job_text: str) -> dict[str, Any]:
     }
 
 
-def heuristic_job_analysis(job_text: str, role_detection: dict[str, Any] | None = None) -> dict[str, Any]:
+def heuristic_job_analysis(
+    job_text: str, role_detection: dict[str, Any] | None = None
+) -> dict[str, Any]:
     from app.services.keyword_match import extract_keyword_candidates
 
     det = role_detection or score_roles(job_text)

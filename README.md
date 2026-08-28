@@ -1,5 +1,16 @@
 # ATS-Bewerbungs-APP
 
+[![CI](https://github.com/GunnarMUC/ATS_App_GER/actions/workflows/ci.yml/badge.svg)](https://github.com/GunnarMUC/ATS_App_GER/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/downloads/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Ollama](https://img.shields.io/badge/LLM-Ollama%20local-black?logo=ollama&logoColor=white)](https://ollama.com)
+[![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey)](#was-sie-brauchen)
+[![Privacy](https://img.shields.io/badge/Privacy-local%20first-success)](#datenschutz-in-klartext)
+[![Code style: Ruff](https://img.shields.io/badge/code%20style-ruff-D7FF64?logo=ruff)](https://docs.astral.sh/ruff/)
+[![Tests](https://img.shields.io/badge/tests-pytest-0A9EDC?logo=pytest&logoColor=white)](tests/)
+[![No cloud SDK](https://img.shields.io/badge/Cloud%20SDK-none%20in%20app-important)](#datenschutz-in-klartext)
+
 **Lokale App für den DACH-Bewerbungsmarkt:** Aus einem echten Master-Lebenslauf und einer konkreten Stellenanzeige entstehen ein **rollenspezifischer, ATS-tauglicher CV** und ein **Anschreiben** — als DOCX, PDF, TXT oder ZIP.
 
 Die App läuft **nur auf Ihrem Rechner**. Sie schickt Ihre Daten nicht an OpenAI, Google oder ähnliche Dienste. Optional nutzt sie **Ollama** auf demselben Gerät (beliebiges Modell, das Sie dort installiert haben).

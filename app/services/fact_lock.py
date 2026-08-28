@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 from sqlalchemy.orm import Session
@@ -54,7 +54,7 @@ def commit_lock(
         reference_cv_id=reference_cv_id,
         facts_json=facts_dict,
         content_hash=digest,
-        confirmed_at=datetime.now(timezone.utc),
+        confirmed_at=datetime.now(UTC),
         is_active=True,
     )
     db.add(lock)
@@ -65,7 +65,9 @@ def commit_lock(
     return lock
 
 
-def save_draft(db: Session, reference_cv_id: str, facts: dict[str, Any] | CVStructure) -> ReferenceCV:
+def save_draft(
+    db: Session, reference_cv_id: str, facts: dict[str, Any] | CVStructure
+) -> ReferenceCV:
     cv = db.get(ReferenceCV, reference_cv_id)
     if cv is None:
         raise ValueError("reference_cv_not_found")

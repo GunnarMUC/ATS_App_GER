@@ -50,9 +50,7 @@ def test_parse_docx_file(tmp_path: Path):
     doc = Document()
     doc.add_heading("Alex Morgenstern", 0)
     doc.add_paragraph("München · alex@example.com")
-    doc.add_paragraph(
-        "Geschäftsleitung Operations mit Verantwortung für OTIF, S&OP und 200 FTE."
-    )
+    doc.add_paragraph("Geschäftsleitung Operations mit Verantwortung für OTIF, S&OP und 200 FTE.")
     doc.save(p)
     r = parse_file(p)
     assert r.media_type == "docx"
@@ -75,7 +73,7 @@ def test_upload_txt_via_api(client, tmp_path: Path):
     content = (
         "Alex Morgenstern\nMünchen\n"
         "Leiter Logistik mit Erfahrung in Supply Chain und OTIF-Steuerung über Jahre.\n"
-    ).encode("utf-8")
+    ).encode()
     r = client.post(
         "/upload/cv",
         files={"file": ("master.txt", content, "text/plain")},

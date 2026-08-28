@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import json
 import logging
-from typing import Any, Awaitable, Callable
+from collections.abc import Awaitable, Callable
+from typing import Any
 
 from app.services.llm_client import LLMError, extract_json_text, generate
 from app.services.prompt_loader import render_prompt
@@ -43,7 +44,9 @@ async def analyze_and_detect(
         if isinstance(data.get("job_analysis"), dict):
             analysis = {**analysis, **data["job_analysis"]}
             analysis["schema_version"] = "1.0"
-            analysis["injection_risk"] = analysis.get("injection_risk") or detection["injection_risk"]
+            analysis["injection_risk"] = (
+                analysis.get("injection_risk") or detection["injection_risk"]
+            )
         if isinstance(data.get("role_detection"), dict):
             # keep heuristic top if LLM disagrees weakly — prefer LLM only if confident
             rd = data["role_detection"]

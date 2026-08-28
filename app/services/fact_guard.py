@@ -98,7 +98,9 @@ def validate_generated_cv(master: dict[str, Any], generated: dict[str, Any]) -> 
             errors.append(f"Neuer Skill: {name}")
 
     # education institutions
-    master_edu = {(e.get("institution") or "", e.get("degree") or "") for e in master.get("education") or []}
+    master_edu = {
+        (e.get("institution") or "", e.get("degree") or "") for e in master.get("education") or []
+    }
     for ed in generated.get("education") or []:
         key = (ed.get("institution") or "", ed.get("degree") or "")
         if key not in master_edu and (ed.get("institution") or ed.get("degree")):
@@ -134,9 +136,7 @@ def validate_generated_cv(master: dict[str, Any], generated: dict[str, Any]) -> 
 
 def validate_cover_text(master: dict[str, Any], cover: str) -> GuardResult:
     errors: list[str] = []
-    master_employers = [
-        e.get("employer") or "" for e in master.get("experience") or []
-    ]
+    master_employers = [e.get("employer") or "" for e in master.get("experience") or []]
     # reject known fake
     banned = ["mckinsey", "harvard", "ifrs", "private equity exit"]
     low = (cover or "").lower()
@@ -147,11 +147,10 @@ def validate_cover_text(master: dict[str, Any], cover: str) -> GuardResult:
             if b not in master_blob:
                 errors.append(f"Cover enthält unzulässigen Begriff: {b}")
 
-    # employers mentioned must be subset
-    for emp in master_employers:
-        pass
     # new employer heuristic: capitalized multi-word GmbH not in master
-    for m in re.finditer(r"\b([A-ZÄÖÜ][\w\-]+(?:\s+[A-ZÄÖÜ][\w\-]+)*)\s+(GmbH|AG|KG)\b", cover or ""):
+    for m in re.finditer(
+        r"\b([A-ZÄÖÜ][\w\-]+(?:\s+[A-ZÄÖÜ][\w\-]+)*)\s+(GmbH|AG|KG)\b", cover or ""
+    ):
         name = m.group(0)
         if not any(terms_match(name, e) for e in master_employers):
             errors.append(f"Unbekannter Arbeitgeber im Anschreiben: {name}")

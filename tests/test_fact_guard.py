@@ -56,9 +56,7 @@ def test_guard_rejects_invented_kpi(fixtures_dir: Path):
 def test_guard_rejects_new_skill_entity(fixtures_dir: Path):
     m = _master(fixtures_dir)
     g = copy.deepcopy(m)
-    g["skills"].append(
-        {"id": "sk_ifrs", "name": "IFRS", "aliases": [], "category": "functional"}
-    )
+    g["skills"].append({"id": "sk_ifrs", "name": "IFRS", "aliases": [], "category": "functional"})
     r = validate_generated_cv(m, g)
     assert not r.ok
 

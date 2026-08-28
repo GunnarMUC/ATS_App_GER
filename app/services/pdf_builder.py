@@ -120,10 +120,7 @@ def build_pdf(facts: dict[str, Any], path: Path | None = None) -> bytes:
     for exp in cv.experience:
         head = ", ".join(x for x in (exp.title, exp.employer, exp.location) if x)
         story.append(Paragraph(_esc(head), bold_body))
-        period = (
-            f"{format_month(exp.start, cv.language)} – "
-            f"{format_month(exp.end, cv.language)}"
-        )
+        period = f"{format_month(exp.start, cv.language)} – {format_month(exp.end, cv.language)}"
         story.append(Paragraph(_esc(period), meta_style))
         items = []
         for b in exp.bullets:
@@ -170,8 +167,4 @@ def build_pdf(facts: dict[str, Any], path: Path | None = None) -> bytes:
 
 
 def _esc(text: str) -> str:
-    return (
-        text.replace("&", "&amp;")
-        .replace("<", "&lt;")
-        .replace(">", "&gt;")
-    )
+    return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")

@@ -36,9 +36,7 @@ async def upload_cv(
             stored_path = str(path)
         elif paste_text and paste_text.strip():
             result = parse_plain_text(paste_text)
-            _stored_name, path = store_upload(
-                paste_text.encode("utf-8"), "paste.txt"
-            )
+            _stored_name, path = store_upload(paste_text.encode("utf-8"), "paste.txt")
             original = "paste.txt"
             stored_path = str(path)
         else:

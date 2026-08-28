@@ -28,10 +28,7 @@ def build_txt(facts: dict[str, Any]) -> str:
     for exp in cv.experience:
         head = ", ".join(x for x in (exp.title, exp.employer, exp.location) if x)
         lines.append(head)
-        period = (
-            f"{format_month(exp.start, cv.language)} – "
-            f"{format_month(exp.end, cv.language)}"
-        )
+        period = f"{format_month(exp.start, cv.language)} – {format_month(exp.end, cv.language)}"
         lines.append(period)
         for b in exp.bullets:
             lines.append(f"• {b.text}")

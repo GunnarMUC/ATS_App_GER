@@ -112,7 +112,7 @@ def build_plan_skeleton(
 
     emphasis_kpis: list[tuple[str, float]] = []
     for kpi in facts.get("kpis") or []:
-        blob = f"{kpi.get('label','')} {kpi.get('raw','')}"
+        blob = f"{kpi.get('label', '')} {kpi.get('raw', '')}"
         bn = normalize_term(blob)
         sc = 0.0
         for t in boost_set:
@@ -126,9 +126,7 @@ def build_plan_skeleton(
             x in bn for x in ("umsatz", "mio", "fte", "report", "ergebnis")
         ):
             sc += 0.8
-        if role_family == "coo" and any(
-            x in bn for x in ("otif", "cost", "standort", "cts")
-        ):
+        if role_family == "coo" and any(x in bn for x in ("otif", "cost", "standort", "cts")):
             sc += 0.8
         emphasis_kpis.append((kpi["id"], sc))
     emphasis_kpis.sort(key=lambda x: x[1], reverse=True)
@@ -210,7 +208,5 @@ def _warnings(role_family: str, facts: dict[str, Any]) -> list[str]:
     if role_family == "ceo":
         titles = {e.get("title") for e in facts.get("experience") or []}
         if "Geschäftsleitung Operations" in titles:
-            out.append(
-                "Titel bleibt „Geschäftsleitung Operations“. Kein Umbennen in CEO."
-            )
+            out.append("Titel bleibt „Geschäftsleitung Operations“. Kein Umbennen in CEO.")
     return out

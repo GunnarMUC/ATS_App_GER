@@ -3,7 +3,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
-
 ALLOWED_EXTENSIONS = {".pdf", ".docx", ".md", ".txt"}
 MIN_TEXT_CHARS = 20
 

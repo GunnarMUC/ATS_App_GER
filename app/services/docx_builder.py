@@ -57,10 +57,7 @@ def build_docx(facts: dict[str, Any], path: Path | None = None) -> bytes:
         hr = hp.add_run(head)
         hr.bold = True
         hr.font.size = Pt(11)
-        period = (
-            f"{format_month(exp.start, cv.language)} – "
-            f"{format_month(exp.end, cv.language)}"
-        )
+        period = f"{format_month(exp.start, cv.language)} – {format_month(exp.end, cv.language)}"
         pp = doc.add_paragraph()
         pr = pp.add_run(period)
         pr.font.size = Pt(10.5)
