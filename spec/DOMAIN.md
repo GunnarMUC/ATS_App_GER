@@ -63,7 +63,7 @@ Englisch/Deutsch parallel ausgeben, wenn die Stelle gemischt ist: Skill „Proje
 
 - CEO-Stellen: Ergebnisverantwortung, Organisation, Stakeholder, Strategie, Wachstum, Governance
 - COO-Stellen: Prozesse, Skalierung, OTIF, Kosten, Delivery, S&OP, Shopfloor/Netzwerk
-- Nicht-synonym: Wer nie P&L hatte, bekommt in der CEO-Linse **keine** erfundenen 80 Mio. — wenn die Zahl im Master steht, darf sie nach oben
+- Nicht-synonym: Wer nie P&L hatte, bekommt in der CEO-Sicht **keine** erfundenen 80 Mio. — wenn die Zahl im Master steht, darf sie nach oben
 
 ## Dateiformat-Empfehlung in der UI
 

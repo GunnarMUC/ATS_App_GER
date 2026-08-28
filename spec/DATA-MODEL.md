@@ -36,7 +36,7 @@ Unveränderliche, bestätigte Fakten. Neue Bestätigung = neue Zeile, alte bleib
 
 ### RoleProfile
 
-Wiederverwendbare Default-Linse (z. B. „COO“, „CEO“).
+Wiederverwendbare Default-Sicht (z. B. „COO“, „CEO“).
 
 | Spalte | Typ | Notes |
 |---|---|---|

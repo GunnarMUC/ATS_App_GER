@@ -34,11 +34,11 @@ Dieses Dokument ist die **erste Datei**, die du liest. Spec liegt unter `spec/`.
 1. **Kein Cloud-SDK in der App.** Kein Telemetrie, kein stiller xAI/OpenAI/Anthropic-Call. Einziger Outbound: `OLLAMA_HOST` (Default Loopback). Was Ollama intern mit einem Tag macht (lokal oder Cloud-Tag), ist Nutzersache — nicht nachbauen, nicht verbieten.
 2. **Kein Scraping.** Stellen nur per Copy-Paste oder Upload (txt/docx/pdf/md).
 3. **Fakten-Schloss.** Das Modell darf keine Arbeitgeber, Titel, Zeiträume, Abschlüsse, KPIs oder Skills **erfinden**. Nur umsortieren, kürzen, umformulieren, übersetzen, betonen.
-4. **Rollenlinse vor Generierung.** Jede Stelle bekommt eine erkannte Rolle + einen sichtbaren Anpassungsplan. Der Nutzer bestätigt, dann erst wird generiert.
+4. **Rollensicht vor Generierung.** Jede Stelle bekommt eine erkannte Rolle + einen sichtbaren Anpassungsplan. Der Nutzer bestätigt, dann erst wird generiert.
 5. **Ein Master-CV, viele Sichten.** CEO-Bewerbung und COO-Bewerbung sind zwei *Sichten* auf dieselben Fakten, nicht zwei Biografien.
 6. **Meilensteine strikt nacheinander.** Kein Milestone N+1 bevor N grün ist (Tests + manuelle Akzeptanz).
 7. **Prompts nur in `app/prompts/*.j2`.** Quelle: `spec/prompts/`. Keine Prompt-Strings in Python.
-8. **JSON-Zwischenformat.** Parser → CV-JSON → Linse → CV-JSON → Builder. Nie DOCX→DOCX.
+8. **JSON-Zwischenformat.** Parser → CV-JSON → Rollensicht → CV-JSON → Builder. Nie DOCX→DOCX.
 9. **Kein Docker-Zwang in v1.** App nativ, Ollama nativ auf dem Host.
 10. **Deutsch als UI- und Default-Dokumentsprache.** Job auf Englisch → Output auf Englisch.
 
@@ -48,7 +48,7 @@ Dieses Dokument ist die **erste Datei**, die du liest. Spec liegt unter `spec/`.
 - `uvicorn` startet die App auf `http://127.0.0.1:8000`
 - Health-Check zeigt Ollama-Status (connected/down) ohne zu crashen; gewählte Tags, nicht fest Qwen
 - Beliebiges installiertes Ollama-Tag in Settings wählbar; fast und strong dürfen identisch sein
-- Fixture-Master-CV + Fixture-Stelle-COO → COO-Linse, Plan, CV
+- Fixture-Master-CV + Fixture-Stelle-COO → COO-Sicht, Plan, CV
 - Dieselben Master-Fakten + Fixture-Stelle-CEO → **andere** Reihenfolge, anderes Summary, **identische** Arbeitgeber/Daten/Titel-Felder
 - Hallucination-Tests in `spec/TESTING.md` sind grün
 - DOCX, PDF, TXT, ZIP funktionieren

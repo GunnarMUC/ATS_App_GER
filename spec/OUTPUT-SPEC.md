@@ -27,7 +27,7 @@ Viele DACH-ATS parsen DOCX zuverlässiger. PDF ist Beigabe für den Menschen. TX
 1. Name
 2. Kontaktzeile (Stadt · Telefon · E-Mail · LinkedIn/Xing)
 3. Profil / Summary (4–6 Zeilen, rollenspezifisch)
-4. Berufserfahrung (reverse-chronologisch **in der Linsen-Reihenfolge**, nicht zwingend kalendarisch wenn der Nutzer das im Plan so bestätigt hat — Default bleibt kalendarisch innerhalb der vom Plan gesetzten Order)
+4. Berufserfahrung (reverse-chronologisch **in der Sicht-Reihenfolge**, nicht zwingend kalendarisch wenn der Nutzer das im Plan so bestätigt hat — Default bleibt kalendarisch innerhalb der vom Plan gesetzten Order)
 5. Ausbildung
 6. Kompetenzen (kommagetrennt oder einfache Bullet-Liste, **keine** Tabelle)
 7. Sprachen

@@ -21,7 +21,7 @@ Die App läuft **nur auf Ihrem Rechner**. Sie schickt Ihre Daten nicht an OpenAI
 
 ## Was die App macht (in einem Satz)
 
-Sie hinterlegen Ihren Werdegang **einmal** (Fakten werden gesperrt). Für jede Stelle wählt die App eine **Rollenlinse** (CEO, COO, CFO, CTO, Vertrieb, HR, Projekt, …): andere Reihenfolge, anderes Profil-Summary, andere Betonung — **ohne** Arbeitgeber, Daten oder Zahlen zu erfinden.
+Sie hinterlegen Ihren Werdegang **einmal** (Fakten werden gesperrt). Für jede Stelle wählt die App eine **Rollensicht** (CEO, COO, CFO, CTO, Vertrieb, HR, Projekt, …): andere Reihenfolge, anderes Profil-Summary, andere Betonung — **ohne** Arbeitgeber, Daten oder Zahlen zu erfinden.
 
 | Ohne diese App | Mit dieser App |
 |---|---|
@@ -161,7 +161,7 @@ Manche Ollama-Tags laufen nicht auf Ihrem PC, sondern Ollama leitet sie weiter. 
    - Oder JSON manuell korrigieren / **Fixture** nur zum Testen  
 5. **Entwurf speichern**, dann **Fakten sperren**  
    - Ab jetzt: umsortieren und umformulieren ja, **erfinden nein**  
-6. Optional: **Export** → Master roh als DOCX/PDF/TXT (ohne Stellenlinse)
+6. Optional: **Export** → Master roh als DOCX/PDF/TXT (ohne Rollensicht)
 
 **Tipp zum Testen ohne eigenen CV:** Auf der Master-CV-Seite „Fixture-Master laden“ (fiktive Person Alex Morgenstern).
 
@@ -219,7 +219,7 @@ Der Master-CV bleibt gesperrt, bis Sie bewusst neu ableiten.
 | **Übersicht** | Master-CVs, Bewerbungstabelle mit Status, Ollama |
 | **Master-CV** | Upload, Fakten, Schloss, Export roh |
 | **Stellen** | Anzeige → Rolle → Plan → Review → Vergleich |
-| **Profile** | Gespeicherte Rollenlinsen (keine zweiten Biografien) |
+| **Profile** | Gespeicherte Rollensichten (keine zweiten Biografien) |
 | **Einstellungen** | Ollama-Host, Modelle, Backup/Restore-ZIP, alle Daten löschen |
 
 ---

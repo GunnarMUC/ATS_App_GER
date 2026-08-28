@@ -53,6 +53,6 @@ Wenn die COO-Stelle zum CEO wird, weil „Geschäftsleitung“ vorkommt: Taxonom
 | Qwen hardcodieren / Mistral verbieten | Tags aus Settings |
 | Tailwind CDN / Node zum Starten | Vendor + committed CSS |
 | `0.0.0.0` | `127.0.0.1` |
-| Profile = zweite Fakten-DB | Profile = Linse, Fakten nur im Lock |
+| Profile = zweite Fakten-DB | Profile = Sicht, Fakten nur im Lock |
 | ATS-Score als Haupt-UI | Rollenkarte + Plan sind Haupt-UI |
 | FactGuard lockern für schwache Modelle | Ranker-Skelett ohne LLM, Guard bleibt hart |

@@ -4,7 +4,7 @@
 
 Ruhig, präzise, deutsch, kein Growth-SaaS. Die Person vertraut der App ihren Lebenslauf an.
 
-Worte die passen: „Vorschlag“, „Linse“, „Fakten unverändert“, „lokal“.  
+Worte die passen: „Vorschlag“, „Sicht“, „Fakten unverändert“, „lokal“.  
 Worte die nicht passen: „Wir haben Sie ATS-gehackt“, „Beat the bot“, Emoji-Feuerwerk.
 
 ## Informationsarchitektur
@@ -83,7 +83,7 @@ Tabs: Lebenslauf | Anschreiben | Diff zur vorigen Version.
 
 ### 6. Rollenprofile
 
-Liste CEO / COO / … — Name, role_family, letzte Nutzung. Edit = Linse, nicht Fakten.
+Liste CEO / COO / … — Name, role_family, letzte Nutzung. Edit = Sicht, nicht Fakten.
 
 ### 7. Einstellungen
 

@@ -5,22 +5,22 @@
 **Ja: Rollenfokus erkennen und den CV darauf umbauen ist das Produkt.**  
 Nicht „ATS-Score von 64 auf 81“. Der Score ist ein Hilfsmittel. Der Wert entsteht, wenn dieselbe Person für eine CEO-Stelle *anders erzählt wird* als für eine COO-Stelle — ohne Fälschung.
 
-Ein statisches „Profil COO“ allein reicht nicht. „CEO einer 40-Personen-Spedition“ und „CEO einer PE-finanzierten Tech-Firma“ brauchen unterschiedliche Linsen, auch wenn beide `CEO` heißen. Deshalb:
+Ein statisches „Profil COO“ allein reicht nicht. „CEO einer 40-Personen-Spedition“ und „CEO einer PE-finanzierten Tech-Firma“ brauchen unterschiedliche Sichten, auch wenn beide `CEO` heißen. Deshalb:
 
 ```
-Master-Fakten  →  role_score + Stelle  →  Ranker-Skelett  →  Linsen-Vorschlag
+Master-Fakten  →  role_score + Stelle  →  Ranker-Skelett  →  Sicht-Vorschlag
                  →  Nutzer bestätigt    →  jobspezifischer CV
 ```
 
 Rollenerkennung und Plan-IDs sind zuerst Heuristik (`role_score.py`, `lens_ranker.py`). Das LLM schreibt Text und bricht Gleichstände. CEO≠COO darf nicht an einem bestimmten Ollama-Tag hängen.
 
-Wiederverwendbare Profile (COO, CEO, Logistik-Leiter) sind **gespeicherte Default-Linsen**, die der Job noch überschreibt.
+Wiederverwendbare Profile (COO, CEO, Logistik-Leiter) sind **gespeicherte Default-Sichten**, die der Job noch überschreibt.
 
 ## Was die App erkennen muss
 
 Aus Titel, Einstiegsabsatz und Anforderungsblock der Stelle:
 
-| Signal | Beispiel | Wirkung auf Linse |
+| Signal | Beispiel | Wirkung auf die Sicht |
 |---|---|---|
 | Rollenfamilie | CEO, Geschäftsführer, COO, Leiter Logistik | Narrative-Archetyp |
 | Seniorität | C-Level, VP, Head of, Specialist | Ton, Scope-Wörter |
@@ -87,7 +87,7 @@ Ohne Bestätigung keine Generierung.
 
 Quelle der Wahrheit: `FactLock.facts` (JSON laut `schemas/cv.schema.json`). Jede Experience hat eine stabile `id`.
 
-Die Linse speichert **keine neuen Fakten**, nur IDs aus dem FactLock (`sk_`, `exp_`, `b_`, `kpi_` — Schema: `adaptation-plan.schema.json`). Beispiel:
+Die Rollensicht speichert **keine neuen Fakten**, nur IDs aus dem FactLock (`sk_`, `exp_`, `b_`, `kpi_` — Schema: `adaptation-plan.schema.json`). Beispiel:
 
 ```json
 {
@@ -122,14 +122,14 @@ Master (vereinfacht):
 - 2015–2020: Leiter Logistik, 3PL-Ausschreibung, SAP-Rollout
 - 2010–2015: Projektleiter Warehouse
 
-**Linse COO** (Stelle: COO Mittelstand Logistik)
+**Sicht COO** (Stelle: COO Mittelstand Logistik)
 
 1. Geschäftsleitung Operations — Bullets: OTIF, S&OP, Netzwerk, Kosten
 2. Leiter Logistik — 3PL, SAP
 3. Projektleiter — kurz
 4. Summary: operative Exzellenz, Delivery, Transformation
 
-**Linse CEO** (Stelle: Geschäftsführer / CEO)
+**Sicht CEO** (Stelle: Geschäftsführer / CEO)
 
 1. Geschäftsleitung Operations — Bullets: P&L 80 Mio., 200 FTE, Organisation, Ergebnisverantwortung
 2. Leiter Logistik — nur soweit sie unternehmerische Ownership zeigt
@@ -154,7 +154,7 @@ Das ist die wichtigste Testfamilie (`TESTING.md`).
 
 1. Stelle kommt rein.
 2. `role_score.py` liefert Familien-Scores; LLM nur bei knappem Abstand oder zur Anreicherung. Detection liefert `role_family`.
-3. Wenn ein gespeichertes Profil zu dieser Familie existiert → als Default-Linse laden.
+3. Wenn ein gespeichertes Profil zu dieser Familie existiert → als Default-Sicht laden.
 4. Job-Keywords und Muss-Anforderungen **überlagern** das Profil (Reihenfolge kann sich pro Stelle ändern).
 5. Nutzer sieht Diff „Profil COO, angepasst an diese Stelle“.
 6. Optional: „Profil mit diesen Änderungen aktualisieren“ oder „nur für diese Bewerbung“.

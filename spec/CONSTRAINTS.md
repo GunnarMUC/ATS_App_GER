@@ -22,7 +22,7 @@ Für Modellwahl, Plattform und Meilenstein-Zuschnitt gilt `MASTERPLAN.md` (und d
 - Master-CV hochladen, Fakten extrahieren, Fakten bestätigen.
 - Stellen per Paste/Upload.
 - Rollenerkennung + Anpassungsplan + bestätigte Generierung.
-- Wiederverwendbare Rollenprofile (CEO, COO, …) als gespeicherte Linsen.
+- Wiederverwendbare Rollenprofile (CEO, COO, …) als gespeicherte Sichten.
 - Anschreiben, 3 Output-Formate, Versionierung, ZIP.
 
 **Out of Scope (nicht bauen)**

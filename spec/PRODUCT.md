@@ -31,7 +31,7 @@ App erkennt Rollenfokus + Sprache + Tonalität
         ↓
 Anpassungsplan (Reihenfolge, Keywords, was ausgeblendet wird)
         ↓
-Nutzer bestätigt oder korrigiert die Rolle / die Linse
+Nutzer bestätigt oder korrigiert die Rolle / die Sicht
         ↓
 CV + Anschreiben generieren
         ↓
@@ -51,10 +51,10 @@ Diese App hat drei Schichten:
 | Schicht | Lebensdauer | Inhalt |
 |---|---|---|
 | **Master-CV** | Monate/Jahre | Vollständige Fakten, gesperrt |
-| **Rollenprofil** | wiederverwendbar | Linse: „Wenn COO, dann …“ |
-| **Bewerbung** | einmal pro Stelle | Job + Linse + generierte Artefakte + Versionen |
+| **Rollenprofil** | wiederverwendbar | Sicht: „Wenn COO, dann …“ |
+| **Bewerbung** | einmal pro Stelle | Job + Sicht + generierte Artefakte + Versionen |
 
-Ein Rollenprofil ist ein **Startpunkt**. Jede Stelle darf die Linse noch verfeinern (andere Keywords, andere Muss-Anforderungen, andere Branche).
+Ein Rollenprofil ist ein **Startpunkt**. Jede Stelle darf die Sicht noch verfeinern (andere Keywords, andere Muss-Anforderungen, andere Branche).
 
 ## Was „Umarbeiten“ konkret heißt
 

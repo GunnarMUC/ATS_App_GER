@@ -45,7 +45,7 @@ Paste oder Upload
   → document_parser
   → keyword_match + role_score     (kein LLM)
   → analyze_and_detect + LLM fast  (ein Call; Fallback: zwei Prompts)
-  → optional: gespeichertes RoleProfile als Default-Linse
+  → optional: gespeichertes RoleProfile als Default-Sicht
   → lens_ranker                    (kein LLM, Plan-Skelett)
   → lens_planner + LLM strong      (Brief/Warnings; ohne Modell: Template)
   → UI: Plan bestätigen
@@ -67,7 +67,7 @@ FactLock + confirmed AdaptationPlan + Job
 ### 4. Rollenprofil speichern
 
 ```
-Bestätigte Linse → RoleProfile (CRUD)
+Bestätigte Sicht → RoleProfile (CRUD)
 Wiederverwendbar als Default bei gleicher role_family
 ```
 
@@ -135,7 +135,7 @@ data/
 ```
 
 - Originale nie überschreiben
-- Generierte Versionen nie still überschreiben; `version` incrementiert pro `(profile_or_lens, job, type)`
+- Generierte Versionen nie still überschreiben; `version` incrementiert pro `(RoleProfile, job, type)`
 - SQLite `PRAGMA journal_mode=WAL` und `foreign_keys=ON`
 - Pfade über `pathlib`, UTF-8, kein OS-spezifischer Hardcode
 

@@ -11,7 +11,7 @@ Repo: **dieses Verzeichnis**. Wurzel nur `README.md`, `LICENSE`, `AGENTS.md`. Sp
 
 ## 1. Zielbild
 
-Lokale Single-User-Webapp: ein gesperrter Master-CV + Stelle → sichtbare Rollenlinse → bestätigter ATS-CV + Anschreiben.
+Lokale Single-User-Webapp: ein gesperrter Master-CV + Stelle → sichtbare Rollensicht → bestätigter ATS-CV + Anschreiben.
 
 Öffentliches GitHub (MIT). Mac / Windows / Linux. UI Deutsch. In-App-LLM = **jedes Modell, das Ollama auf `OLLAMA_HOST` anbietet**. Qwen 2.5/3 7B+14B ist Empfehlung, kein Zwang.
 
@@ -150,7 +150,7 @@ Strikt nacheinander. Jeder Schritt: Tests grün, manuelle Akzeptanz, 5–10 Zeil
 - `uvicorn` auf `http://127.0.0.1:8000`, kein Docker nötig
 - Health ohne Crash, Ollama optional
 - Beliebiges installiertes Ollama-Tag in Settings wählbar
-- Fixture-Master + COO-Stelle → COO-Linse; dieselben Fakten + CEO-Stelle → andere Sicht, identische Employer/Daten/Titel-Felder
+- Fixture-Master + COO-Stelle → COO-Sicht; dieselben Fakten + CEO-Stelle → andere Sicht, identische Employer/Daten/Titel-Felder
 - Halluzinationstests grün
 - DOCX, PDF, TXT, ZIP
 - App-Code enthält keine Cloud-Provider-Clients und liest keine API-Keys

@@ -59,7 +59,7 @@ Kein M(n+1) bevor M(n) grün. Vertrag: `MASTERPLAN.md`.
 - [x] Font-Fallback Calibri/Arial → Helvetica/Liberation Sans
 - [x] Builder-Tests (temp files, einspaltig, Kontakt im Body)
 
-**Akzeptanz:** Download eines „Master-CV roh“ in 3 Formaten, ohne Rollenlinse. Scan-PDF erklärt den Fail.
+**Akzeptanz:** Download eines „Master-CV roh“ in 3 Formaten, ohne Rollensicht. Scan-PDF erklärt den Fail.
 
 ---
 
@@ -83,7 +83,7 @@ Kein M(n+1) bevor M(n) grün. Vertrag: `MASTERPLAN.md`.
 - [x] `plan_adaptation.j2` / `lens_planner.py`: LLM nur `summary_brief` + `warnings_de`; ohne Modell: Template-Brief
 - [x] Plan-UI: Sortable Experience, Hide, Summary-Brief, Keyword-Matrix, Lücken-Warnung
 - [x] Confirm-Endpunkt
-- [x] RoleProfile CRUD „Linse speichern“
+- [x] RoleProfile CRUD „Sicht speichern“
 - [x] Overlay: Profil × Job
 - [x] Tests: Plan referenziert nur existierende IDs; Hidden ⊂ Experience-IDs; CEO- vs COO-Order **ohne** LLM verschieden
 

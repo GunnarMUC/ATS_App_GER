@@ -19,7 +19,7 @@ Alle Prompts liegen in `spec/prompts/` und werden 1:1 nach `app/prompts/` kopier
 | `analyze_job.j2` | fast | Job-Analyse JSON (Fallback/Repair) |
 | `detect_role.j2` | fast | RoleDetection JSON (Fallback / Tie-Break) |
 | `plan_adaptation.j2` | strong | AdaptationPlan JSON — im Happy Path nur Brief/Warnings auf Ranker-Skelett |
-| `generate_cv.j2` | strong | CV JSON (Linse angewandt) |
+| `generate_cv.j2` | strong | CV JSON (Rollensicht angewandt) |
 | `generate_cover.j2` | strong | Anschreiben-Text |
 | `json_repair.j2` | fast | repariertes JSON |
 | `suggest_aliases.j2` | fast | optionale Alias-Vorschläge |

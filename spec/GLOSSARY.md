@@ -5,8 +5,8 @@
 | Master-CV | Vollständiger, einmal gepflegter Lebenslauf |
 | FactLock | Bestätigte JSON-Fakten inkl. Hash; Quelle der Wahrheit |
 | Rollenfamilie / `role_family` | Grobe Klasse: ceo, coo, … |
-| Rollenlinse | Abbildung Master → Sicht für eine Rolle (Order, Hidden, Emphasis) |
-| Rollenprofil | Gespeicherte Default-Linse |
+| Rollensicht | Abbildung Master → Sicht für eine Rolle (Order, Hidden, Emphasis) |
+| Rollenprofil | Gespeicherte Default-Sicht |
 | AdaptationPlan | Jobspezifischer, bestätigbarer Umbau-Vorschlag |
 | Ranker-Skelett | Deterministischer Plan ohne LLM (`lens_ranker.py`) |
 | Bewerbung | Job + Plan + generierte Dokumente |

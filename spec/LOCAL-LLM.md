@@ -5,7 +5,7 @@
 | LLM | Wer | Aufgabe |
 |---|---|---|
 | SuperGrok 4.6 | OpenCode, beim Programmieren | Code schreiben |
-| Ollama-Tag nach Wahl | die fertige App | CV/Stelle/Linse/Generierung |
+| Ollama-Tag nach Wahl | die fertige App | CV/Stelle/Sicht/Generierung |
 
 Die App ruft **niemals** Grok, xAI, OpenAI, Anthropic oder ein anderes Cloud-SDK auf. Einziger Outbound: `OLLAMA_HOST`.
 
